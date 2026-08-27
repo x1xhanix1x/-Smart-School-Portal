@@ -1,0 +1,2758 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>بوابة العمل الإداري — مدرسة [اسم المدرسة]</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
+
+  :root {
+    --green: #1B5E3B;
+    --green-light: #2D8A5E;
+    --blue: #2B7A9E;
+    --gold: #C9A227;
+    --bg: #f5f7fa;
+    --card: #ffffff;
+    --text: #1a1a2e;
+    --text-light: #6b7280;
+    --border: #e5e7eb;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08);
+    --shadow-hover: 0 8px 25px rgba(0,0,0,0.1);
+    --radius: 12px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Tajawal', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+
+  /* ===== Header with logos ===== */
+  .header {
+    background: linear-gradient(135deg, var(--green) 0%, var(--blue) 100%);
+    border-radius: var(--radius);
+    padding: 24px;
+    color: white;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow-hover);
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: 30%;
+    width: 180px; height: 180px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 50%;
+  }
+  .header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    position: relative;
+    z-index: 1;
+  }
+  .header-logo {
+    background: white;
+    border-radius: 12px;
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    flex-shrink: 0;
+  }
+  .header-logo img { height: 64px; width: auto; display: block; }
+  .header-center { text-align: center; flex: 1; }
+  .header h1 { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+  .header p { font-size: 15px; opacity: 0.9; }
+  .badges {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    background: var(--gold);
+    color: #1a1a1a;
+    padding: 5px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .badge-outline {
+    background: rgba(255,255,255,0.15);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.3);
+  }
+
+  /* ===== User bar ===== */
+  .userbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px 16px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+    flex-wrap: wrap;
+  }
+  .user-info { display: flex; align-items: center; gap: 10px; font-size: 13px; }
+  .avatar {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: var(--green);
+    color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 14px;
+  }
+  .role-chip {
+    padding: 3px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .role-admin { background: rgba(201,162,39,0.15); color: #8a6d00; }
+  .role-deputy { background: rgba(43,122,158,0.12); color: var(--blue); }
+  .role-teacher { background: rgba(27,94,59,0.1); color: var(--green); }
+  .role-assistant { background: rgba(107,114,128,0.12); color: var(--text-light); }
+  .user-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .btn {
+    border: none;
+    padding: 7px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: inherit;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .btn-primary { background: var(--green); color: white; }
+  .btn-primary:hover { background: #144a2e; }
+  .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text-light); }
+  .btn-outline:hover { border-color: var(--green-light); color: var(--green); }
+  .btn-danger { background: rgba(239,68,68,0.08); color: #dc2626; border: 1px solid rgba(239,68,68,0.2); }
+  .btn-danger:hover { background: rgba(239,68,68,0.15); }
+
+  /* ===== Stats ===== */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .stat {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 18px 12px;
+    text-align: center;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    transition: transform 0.2s;
+  }
+  .stat:hover { transform: translateY(-2px); }
+  .stat-num {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--green);
+    font-variant-numeric: tabular-nums;
+  }
+  .stat-label { font-size: 12px; color: var(--text-light); margin-top: 2px; }
+
+  /* ===== Search ===== */
+  .search-wrap { position: relative; margin-bottom: 16px; }
+  .search-input {
+    width: 100%;
+    padding: 12px 44px 12px 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-family: inherit;
+    font-size: 14px;
+    background: var(--card);
+    box-shadow: var(--shadow);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .search-input:focus { border-color: var(--green-light); }
+  .search-icon {
+    position: absolute;
+    right: 14px; top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: var(--text-light);
+  }
+  .search-results {
+    display: none;
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0; left: 0;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-hover);
+    max-height: 320px;
+    overflow-y: auto;
+    z-index: 50;
+  }
+  .search-results.active { display: block; }
+  .search-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+  .search-item:last-child { border-bottom: none; }
+  .search-item:hover { background: rgba(27,94,59,0.05); }
+  .search-item .path { font-size: 11px; color: var(--text-light); }
+  .search-empty { padding: 16px; text-align: center; color: var(--text-light); font-size: 13px; }
+
+  /* ===== Tabs ===== */
+  .tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .tab {
+    padding: 10px 28px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--text-light);
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 14px;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .tab.active {
+    background: var(--green);
+    color: white;
+    border-color: var(--green);
+    box-shadow: 0 2px 8px rgba(27,94,59,0.25);
+  }
+  .tab:hover:not(.active) { background: #f0fdf4; border-color: var(--green-light); }
+
+  /* ===== Content / Folders ===== */
+  .content { display: none; }
+  .content.active {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .folder {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 20px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .folder:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--blue);
+  }
+  .folder-tools {
+    position: absolute;
+    top: 10px; left: 10px;
+    display: none;
+    gap: 6px;
+  }
+  .folder-tools.visible { display: flex; }
+  .tool-btn {
+    width: 28px; height: 28px;
+    border-radius: 7px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    cursor: pointer;
+    font-size: 13px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+  }
+  .tool-btn:hover { border-color: var(--blue); background: rgba(43,122,158,0.08); }
+  .tool-btn.del:hover { border-color: #dc2626; background: rgba(239,68,68,0.08); }
+  .folder-icon {
+    width: 40px; height: 40px;
+    background: rgba(27,94,59,0.08);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+    font-size: 18px;
+  }
+  .folder-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .folder-desc { font-size: 12px; color: var(--text-light); line-height: 1.5; }
+  .folder-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 14px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+    font-size: 11px;
+    color: var(--text-light);
+  }
+  .status { display: flex; align-items: center; gap: 4px; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; }
+  .dot-green { background: #22c55e; }
+  .dot-yellow { background: #f59e0b; }
+  .folder-updated { font-size: 10px; color: var(--text-light); margin-top: 6px; }
+
+  .add-folder-card {
+    background: transparent;
+    border: 2px dashed var(--border);
+    border-radius: var(--radius);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: var(--text-light);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    min-height: 160px;
+    transition: all 0.2s;
+  }
+  .add-folder-card:hover { border-color: var(--green-light); color: var(--green); background: rgba(27,94,59,0.03); }
+  .add-folder-card .plus { font-size: 26px; }
+
+  /* ===== Detail Panel ===== */
+  .detail {
+    display: none;
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-top: 16px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-hover);
+  }
+  .detail.active { display: block; }
+  .detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--border);
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .detail-title { font-size: 16px; font-weight: 700; color: var(--green); margin: 0; }
+  .detail-actions { display: flex; gap: 8px; }
+  .close-btn {
+    background: rgba(239,68,68,0.08);
+    color: #dc2626;
+    border: 1px solid rgba(239,68,68,0.2);
+    padding: 6px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 12px;
+    font-family: inherit;
+    transition: all 0.2s;
+  }
+  .close-btn:hover { background: rgba(239,68,68,0.15); }
+  .file-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .file-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--bg);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+  }
+  .file-item:hover { background: rgba(27,94,59,0.05); border-color: var(--green-light); }
+  .file-icon { font-size: 16px; flex-shrink: 0; }
+  .file-name { flex: 1; font-size: 13px; }
+  .file-action {
+    background: var(--blue);
+    color: white;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 700;
+    font-family: inherit;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+  }
+  .file-action:hover { background: #1e5a75; }
+  .file-action.disabled { background: #9ca3af; pointer-events: none; }
+
+  /* ===== Modals ===== */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15,23,42,0.55);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 26px;
+    width: 100%;
+    max-width: 460px;
+    max-height: 88vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+  }
+  .modal.wide { max-width: 640px; }
+  .modal h3 { font-size: 16px; margin-bottom: 18px; color: var(--green); }
+  .form-group { margin-bottom: 14px; }
+  .form-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: var(--text);
+  }
+  .form-group input, .form-group select, .form-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s;
+    background: white;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    border-color: var(--green-light);
+  }
+  .modal-actions { display: flex; gap: 8px; justify-content: flex-start; margin-top: 20px; }
+  .icon-picker { display: flex; gap: 6px; flex-wrap: wrap; }
+  .icon-option {
+    width: 36px; height: 36px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    font-size: 17px;
+    transition: all 0.15s;
+  }
+  .icon-option.selected { border-color: var(--green); background: rgba(27,94,59,0.08); }
+
+  /* ===== Login ===== */
+  .login-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, var(--green) 0%, var(--blue) 100%);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .login-overlay.active { display: flex; }
+  .login-card {
+    background: white;
+    border-radius: 16px;
+    padding: 34px 30px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 25px 70px rgba(0,0,0,0.3);
+    text-align: center;
+  }
+  .login-logos {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 18px;
+  }
+  .login-logos img { height: 56px; width: auto; }
+  .login-card h2 { font-size: 19px; margin-bottom: 4px; }
+  .login-card .sub { font-size: 13px; color: var(--text-light); margin-bottom: 22px; }
+  .login-card .form-group { text-align: right; }
+  .login-error {
+    display: none;
+    background: rgba(239,68,68,0.08);
+    color: #dc2626;
+    border: 1px solid rgba(239,68,68,0.2);
+    border-radius: 8px;
+    padding: 9px 12px;
+    font-size: 12px;
+    margin-bottom: 14px;
+  }
+  .login-error.active { display: block; }
+  .btn-block { width: 100%; justify-content: center; padding: 12px; font-size: 14px; }
+  .login-guest {
+    margin-top: 14px;
+    font-size: 12px;
+    color: var(--text-light);
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  /* ===== Users table ===== */
+  .users-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .users-table th {
+    text-align: right;
+    padding: 8px 10px;
+    background: var(--bg);
+    font-size: 12px;
+    color: var(--text-light);
+    border-bottom: 1px solid var(--border);
+  }
+  .users-table td { padding: 9px 10px; border-bottom: 1px solid var(--border); }
+  .users-table select {
+    padding: 5px 8px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 12px;
+  }
+
+  /* ===== Toast ===== */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    right: 50%;
+    transform: translateX(50%) translateY(80px);
+    background: #111827;
+    color: white;
+    padding: 11px 22px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    z-index: 300;
+    opacity: 0;
+    transition: all 0.3s;
+    pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translateX(50%) translateY(0); }
+  .toast.success { background: var(--green); }
+  .toast.error { background: #dc2626; }
+
+  /* ===== Loading ===== */
+  .loading { text-align: center; padding: 40px; color: var(--text-light); font-size: 14px; }
+  .spinner {
+    width: 32px; height: 32px;
+    border: 3px solid var(--border);
+    border-top-color: var(--green);
+    border-radius: 50%;
+    margin: 0 auto 12px;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ===== Footer ===== */
+  .footer {
+    text-align: center;
+    margin-top: 32px;
+    padding: 16px;
+    font-size: 12px;
+    color: var(--text-light);
+    border-top: 1px solid var(--border);
+  }
+
+  /* ===== شريط الأقسام الرئيسي ===== */
+  .mainnav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .navcard {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 10px;
+    text-align: center;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-light);
+    box-shadow: var(--shadow);
+    transition: all 0.2s;
+  }
+  .navcard .ic { font-size: 22px; display: block; margin-bottom: 4px; }
+  .navcard:hover { transform: translateY(-2px); border-color: var(--green-light); }
+  .navcard.active {
+    background: linear-gradient(135deg, var(--green), var(--blue));
+    color: white;
+    border-color: transparent;
+  }
+  .app-section { display: none; }
+  .app-section.active { display: block; }
+
+  /* ===== قسم زيارات المدير ===== */
+  .visits-layout { display: grid; grid-template-columns: 330px 1fr; gap: 16px; align-items: start; }
+  .panel {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+  }
+  .panel h3 { font-size: 15px; color: var(--green); margin-bottom: 14px; }
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+  .chip {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .chip b { color: var(--green); font-size: 14px; }
+  .chip.blue b { color: var(--blue); }
+  .chip.amber b { color: #b45309; }
+  .visits-table-wrap { overflow-x: auto; }
+  .visits-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .visits-table th {
+    text-align: right; padding: 9px 10px; background: var(--bg);
+    font-size: 12px; color: var(--text-light); border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  .visits-table td { padding: 9px 10px; border-bottom: 1px solid var(--border); }
+  .v-badge { padding: 3px 12px; border-radius: 14px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+  .v-scheduled { background: rgba(43,122,158,0.1); color: var(--blue); }
+  .v-done { background: rgba(27,94,59,0.1); color: var(--green); }
+  .v-cancelled { background: rgba(107,114,128,0.12); color: var(--text-light); }
+  .overall-badge { padding: 3px 12px; border-radius: 14px; font-size: 11px; font-weight: 700; }
+
+  /* عناصر التقييم في تقرير الزيارة */
+  .eval-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .eval-row:last-of-type { border-bottom: none; }
+  .eval-name { font-size: 13px; font-weight: 500; flex: 1; }
+  .eval-opts { display: flex; gap: 5px; }
+  .eval-opt {
+    border: 1px solid var(--border);
+    background: white;
+    border-radius: 7px;
+    padding: 5px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    color: var(--text-light);
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .eval-opt.sel-4 { background: var(--green); color: white; border-color: var(--green); }
+  .eval-opt.sel-3 { background: var(--blue); color: white; border-color: var(--blue); }
+  .eval-opt.sel-2 { background: var(--gold); color: #1a1a1a; border-color: var(--gold); }
+  .eval-opt.sel-1 { background: #dc2626; color: white; border-color: #dc2626; }
+  .eval-avg {
+    text-align: center;
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 12px;
+    margin-top: 14px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  /* ===== الهوية البصرية للمطبوعات (النموذج الرسمي) ===== */
+  .id-top {
+    background: #183643;
+    border-radius: 0 0 42px 42px;
+    padding: 18px 34px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+  }
+  .id-top::before {
+    content: "";
+    position: absolute;
+    top: 0; right: 0; left: 0;
+    height: 4px;
+    background: linear-gradient(to left, #4DBC71, #40978F 45%, #3D7EC2);
+  }
+  .id-top::after {
+    content: "";
+    position: absolute;
+    bottom: -3px; right: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(to left, #4DBC71, #40978F 45%, #3D7EC2);
+    border-radius: 0 0 42px 42px;
+  }
+  .id-top img.id-min { height: 62px; width: auto; filter: brightness(0) invert(1); }
+  .id-cont {
+    display: flex;
+    align-items: center;
+  }
+  .id-cont img { height: 56px; width: auto; display: block; }
+  .id-lines {
+    text-align: center;
+    color: white;
+    font-size: 12.5px;
+    font-weight: 700;
+    line-height: 2;
+    border-right: 2px solid #40978F;
+    padding-right: 20px;
+  }
+  .id-school-row { text-align: center; margin-top: -3px; margin-bottom: 14px; position: relative; z-index: 1; }
+  .id-school {
+    display: inline-block;
+    background: #183643;
+    color: white;
+    font-weight: 700;
+    font-size: 15px;
+    padding: 7px 70px;
+    border: 2px solid #40978F;
+    border-top: none;
+    border-radius: 0 0 18px 18px;
+    box-shadow: 0 3px 8px rgba(24,54,67,0.35);
+  }
+  .id-footer {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 18px;
+    background: linear-gradient(to right, #3D7EC2, #45A08C 45%, #4DBC71);
+    border-radius: 0 30px 0 0;
+  }
+  .id-footer::before {
+    content: "";
+    position: absolute;
+    bottom: 40px; right: 28px; left: 0;
+    height: 2px;
+    background: linear-gradient(to right, #4DBC71, #3D7EC2);
+  }
+  .id-footer::after {
+    content: "";
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 42px; height: 42px;
+    border-top: 2px solid #3D7EC2;
+    border-right: 2px solid #3D7EC2;
+    border-top-right-radius: 40px;
+  }
+  .paper-body { padding: 4px 38px 70px; }
+
+  /* ===== تنسيق التقارير المطبوعة ===== */
+  .rp-title { text-align: center; margin: 2px 0 10px; }
+  .rp-title span {
+    display: inline-block;
+    font-weight: 800;
+    font-size: 17px;
+    color: #183643;
+    border-bottom: 2.5px solid #40978F;
+    padding-bottom: 4px;
+  }
+  .rp-table { width: 100%; border-collapse: collapse; margin-bottom: 7px; }
+  .rp-table td, .rp-table th { border: 1px solid #9fb4bc; padding: 4px 8px; font-size: 11.5px; }
+  .rp-table .rp-label { background: #eaf2f1; color: #183643; font-weight: 700; width: 22%; white-space: nowrap; }
+  .rp-eval th { background: #183643; color: #fff; font-weight: 700; }
+  .rp-eval tbody tr:nth-child(even) td { background: #f4f8f8; }
+  .rp-overall {
+    border: 1.5px solid #40978F;
+    background: linear-gradient(to left, rgba(77,188,113,.12), rgba(61,126,194,.12));
+    color: #183643;
+    font-weight: 800;
+    text-align: center;
+    padding: 6px;
+    margin-bottom: 7px;
+    border-radius: 5px;
+    font-size: 12.5px;
+  }
+  .rp-sec {
+    font-weight: 800;
+    font-size: 12px;
+    color: #183643;
+    margin: 7px 0 3px;
+    border-right: 3px solid #40978F;
+    padding-right: 7px;
+  }
+  .rp-box {
+    border: 1px solid #9fb4bc;
+    border-radius: 5px;
+    min-height: 34px;
+    padding: 5px 9px;
+    font-size: 11.5px;
+    white-space: pre-wrap;
+  }
+  .rp-signs {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+    font-weight: 700;
+    font-size: 12px;
+    color: #183643;
+    text-align: center;
+  }
+
+  /* ===== منطقة الطباعة ===== */
+  #printArea { display: none; }
+  @page { size: A4 portrait; margin: 7mm; }
+  @media print {
+    html, body { height: auto; }
+    body * { visibility: hidden; }
+    #printArea, #printArea * {
+      visibility: visible;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+    #printArea {
+      display: block !important;
+      position: absolute;
+      inset: 0;
+      padding: 0;
+      background: white;
+      font-family: 'Tajawal', sans-serif;
+    }
+    #printArea .paper {
+      border: none;
+      box-shadow: none;
+      height: 283mm;
+      max-height: 283mm;
+      overflow: hidden;
+    }
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 768px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .content.active { grid-template-columns: 1fr; }
+    .file-list { grid-template-columns: 1fr; }
+    .visits-layout { grid-template-columns: 1fr; }
+    .header h1 { font-size: 17px; }
+    .header-logo img { height: 44px; }
+    .header-row { gap: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Header مع الشعارين -->
+  <div class="header">
+    <div class="header-row">
+      <!-- يمين: وزارة التعليم -->
+      <div class="header-logo">
+        <img src="logo-ministry.png" alt="وزارة التعليم">
+      </div>
+      <div class="header-center">
+        <h1>بوابة العمل الإداري — مدرسة <span id="schoolNameText">[اسم المدرسة]</span></h1>
+        <p>العام الدراسي 1447 — 1448 هـ</p>
+        <div class="badges">
+          <span class="badge">جاهز لعرض المشرفين</span>
+          <span class="badge badge-outline" id="sourceBadge">بيانات تجريبية</span>
+        </div>
+      </div>
+      <!-- يسار: التعليم المستمر بجدة -->
+      <div class="header-logo">
+        <img src="logo-continuous.png" alt="التعليم المستمر بجدة">
+      </div>
+    </div>
+  </div>
+
+  <!-- شريط المستخدم -->
+  <div class="userbar">
+    <div class="user-info" id="userInfo">
+      <div class="avatar">ز</div>
+      <div>
+        <div style="font-weight:700" id="userName">زائر</div>
+        <div style="font-size:11px;color:var(--text-light)" id="userRoleLabel">وضع العرض فقط</div>
+      </div>
+    </div>
+    <div class="user-actions">
+      <button class="btn btn-outline" id="schoolBtn" style="display:none" onclick="openSchoolModal()">🏫 اسم المدرسة</button>
+      <button class="btn btn-outline" id="usersBtn" style="display:none" onclick="openUsersModal()">👥 إدارة المستخدمين</button>
+      <button class="btn btn-primary" id="loginBtn" onclick="openLogin()">تسجيل الدخول</button>
+      <button class="btn btn-danger" id="logoutBtn" style="display:none" onclick="logout()">خروج</button>
+    </div>
+  </div>
+
+  <!-- شريط الأقسام الرئيسي -->
+  <div class="mainnav">
+    <button class="navcard active" id="nav-files" onclick="showSection('files')"><span class="ic">📂</span>ملفات العمل</button>
+    <button class="navcard" id="nav-visits" onclick="showSection('visits')"><span class="ic">👁</span>زيارات المدير</button>
+    <button class="navcard" id="nav-exchange" onclick="showSection('exchange')"><span class="ic">🔄</span>تبادل الزيارات</button>
+    <button class="navcard" id="nav-staff" onclick="showSection('staff')"><span class="ic">👥</span>العاملون</button>
+  </div>
+
+  <!-- ============ قسم ملفات العمل ============ -->
+  <div id="section-files" class="app-section active">
+
+  <!-- الإحصائيات -->
+  <div class="stats">
+    <div class="stat"><div class="stat-num" id="statFolders">0</div><div class="stat-label">مجلد رئيسي</div></div>
+    <div class="stat"><div class="stat-num" id="statFiles">0</div><div class="stat-label">ملف إجمالي</div></div>
+    <div class="stat"><div class="stat-num" id="statDone">0%</div><div class="stat-label">نسبة الإنجاز</div></div>
+    <div class="stat"><div class="stat-num" id="statSems">0</div><div class="stat-label">فصل دراسي</div></div>
+  </div>
+
+  <!-- البحث -->
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" class="search-input" id="searchInput" placeholder="ابحث عن ملف أو مجلد..." oninput="onSearch(this.value)">
+    <div class="search-results" id="searchResults"></div>
+  </div>
+
+  <!-- التبويبات -->
+  <div class="tabs" id="tabsBar"></div>
+
+  <!-- محتوى الفصول -->
+  <div id="semestersContainer">
+    <div class="loading"><div class="spinner"></div>جاري تحميل البيانات...</div>
+  </div>
+
+  <!-- لوحة التفاصيل -->
+  <div id="detailPanel" class="detail">
+    <div class="detail-header">
+      <h3 class="detail-title" id="detailTitle">محتوى المجلد</h3>
+      <div class="detail-actions">
+        <button class="btn btn-primary" id="addFileBtn" style="display:none" onclick="openFileModal()">+ إضافة ملف</button>
+        <button class="close-btn" onclick="closeDetail()">إغلاق</button>
+      </div>
+    </div>
+    <div class="file-list" id="fileList"></div>
+  </div>
+
+  </div>
+  <!-- ============ نهاية قسم ملفات العمل ============ -->
+
+  <!-- ============ قسم زيارات المدير ============ -->
+  <div id="section-visits" class="app-section">
+    <div class="chips" id="visitChips"></div>
+    <div class="visits-layout">
+
+      <!-- جدولة زيارة جديدة -->
+      <div class="panel" id="schedulePanel">
+        <h3>🗓 جدولة زيارة جديدة</h3>
+        <div class="form-group">
+          <label>الفصل الدراسي</label>
+          <select id="vSemester">
+            <option value="s1">الفصل الدراسي الأول</option>
+            <option value="s2">الفصل الدراسي الثاني</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>الأسبوع</label>
+          <select id="vWeek"></select>
+        </div>
+        <div class="form-group">
+          <label>اليوم</label>
+          <select id="vDay">
+            <option>الأحد</option><option>الاثنين</option><option>الثلاثاء</option>
+            <option>الأربعاء</option><option>الخميس</option>
+          </select>
+        </div>
+        <div class="form-group"><label>التاريخ</label><input type="date" id="vDate"></div>
+        <div class="form-group"><label>اسم المعلم</label><input type="text" id="vTeacher" list="teacherList" placeholder="اسم المعلم"></div>
+        <div class="form-group"><label>المادة</label><input type="text" id="vSubject" placeholder="مثال: الرياضيات"></div>
+        <div class="form-group"><label>الصف / الفصل</label><input type="text" id="vClass" placeholder="مثال: الصف الرابع «2»"></div>
+        <div class="form-group">
+          <label>الحصة</label>
+          <select id="vPeriod">
+            <option>الأولى</option><option>الثانية</option><option>الثالثة</option>
+            <option>الرابعة</option><option>الخامسة</option><option>السادسة</option><option>السابعة</option>
+          </select>
+        </div>
+        <div class="modal-actions" style="margin-top:8px">
+          <button class="btn btn-primary" onclick="addVisit('principal')">إضافة للخطة</button>
+        </div>
+      </div>
+
+      <!-- جدول الخطة -->
+      <div class="panel">
+        <h3>📋 خطة الزيارات الفصلية</h3>
+        <div class="visits-table-wrap">
+          <table class="visits-table">
+            <thead>
+              <tr><th>الأسبوع</th><th>اليوم</th><th>التاريخ</th><th>المعلم</th><th>المادة</th><th>الصف</th><th>الحصة</th><th>الحالة</th><th>التقدير</th><th></th></tr>
+            </thead>
+            <tbody id="visitsTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ============ نهاية قسم زيارات المدير ============ -->
+
+  <!-- ============ قسم تبادل الزيارات بين المعلمين ============ -->
+  <div id="section-exchange" class="app-section">
+    <div class="chips" id="exchangeChips"></div>
+    <div class="visits-layout" id="exchangeLayout">
+
+      <!-- جدولة زيارة تبادلية -->
+      <div class="panel" id="exchangeSchedulePanel">
+        <h3>🔄 جدولة زيارة تبادلية</h3>
+        <div class="form-group">
+          <label>الفصل الدراسي</label>
+          <select id="xSemester">
+            <option value="s1">الفصل الدراسي الأول</option>
+            <option value="s2">الفصل الدراسي الثاني</option>
+          </select>
+        </div>
+        <div class="form-group"><label>الأسبوع</label><select id="xWeek"></select></div>
+        <div class="form-group">
+          <label>اليوم</label>
+          <select id="xDay">
+            <option>الأحد</option><option>الاثنين</option><option>الثلاثاء</option>
+            <option>الأربعاء</option><option>الخميس</option>
+          </select>
+        </div>
+        <div class="form-group"><label>التاريخ</label><input type="date" id="xDate"></div>
+        <div class="form-group"><label>المعلم الزائر</label><input type="text" id="xVisitor" list="teacherList" placeholder="من سيقوم بالزيارة"></div>
+        <div class="form-group"><label>المعلم المستضيف</label><input type="text" id="xHost" list="teacherList" placeholder="من سيُزاره في فصله"></div>
+        <div class="form-group"><label>المادة</label><input type="text" id="xSubject" placeholder="مثال: العلوم"></div>
+        <div class="form-group"><label>الصف / الفصل</label><input type="text" id="xClass" placeholder="مثال: الصف الخامس «1»"></div>
+        <div class="form-group">
+          <label>الحصة</label>
+          <select id="xPeriod">
+            <option>الأولى</option><option>الثانية</option><option>الثالثة</option>
+            <option>الرابعة</option><option>الخامسة</option><option>السادسة</option><option>السابعة</option>
+          </select>
+        </div>
+        <div class="modal-actions" style="margin-top:8px">
+          <button class="btn btn-primary" onclick="addVisit('exchange')">إضافة للخطة</button>
+        </div>
+      </div>
+
+      <!-- جدول الزيارات التبادلية -->
+      <div class="panel">
+        <h3>🔄 خطة تبادل الزيارات بين المعلمين</h3>
+        <div class="visits-table-wrap">
+          <table class="visits-table">
+            <thead>
+              <tr><th>الأسبوع</th><th>اليوم</th><th>التاريخ</th><th>الزائر</th><th>المستضيف</th><th>المادة</th><th>الصف</th><th>الحصة</th><th>الحالة</th><th>التقدير</th><th></th></tr>
+            </thead>
+            <tbody id="exchangeTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ============ نهاية قسم تبادل الزيارات ============ -->
+
+  <!-- ============ قسم العاملون ============ -->
+  <div id="section-staff" class="app-section">
+    <div class="chips" id="staffChips"></div>
+
+    <div class="visits-layout" id="staffLayout">
+
+      <!-- نموذج إضافة موظف (للمدير فقط) -->
+      <div class="panel" id="staffAddPanel">
+        <h3 id="staffPanelTitle">➕ إضافة موظف</h3>
+        <div class="form-group"><label>الاسم</label><input type="text" id="sName" placeholder="مثال: أ. محمد العتيبي"></div>
+        <div class="form-group">
+          <label>الصفة الوظيفية</label>
+          <select id="sJob" onchange="suggestRole()">
+            <option value="معلم">معلم</option>
+            <option value="مدير المدرسة">مدير المدرسة</option>
+            <option value="وكيل">وكيل</option>
+            <option value="مساعد إداري">مساعد إداري</option>
+            <option value="حارس">حارس</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>صلاحية النظام</label>
+          <select id="sRole">
+            <option value="teacher">معلم — عرض + تقارير التبادل</option>
+            <option value="guard">حارس — عرض فقط</option>
+            <option value="assistant">مساعد إداري — إضافة وتعديل الملفات</option>
+            <option value="deputy">وكيل — إدارة المجلدات والزيارات</option>
+            <option value="admin">مدير — صلاحيات كاملة</option>
+          </select>
+        </div>
+        <div class="form-group" id="sEmailGroup"><label>البريد الإلكتروني (اختياري — لإنشاء حساب دخول)</label><input type="email" id="sEmail" dir="ltr" placeholder="user@school.sa"></div>
+        <div class="form-group" id="sPasswordGroup"><label>كلمة المرور (مع البريد فقط)</label><input type="text" id="sPassword" dir="ltr" placeholder="6 أحرف على الأقل"></div>
+        <button class="btn btn-primary btn-block" id="staffSubmitBtn" onclick="submitStaff()">إضافة للعاملين</button>
+        <button class="btn btn-block" id="staffCancelBtn" style="display:none;margin-top:8px" onclick="cancelEditStaff()">إلغاء التعديل</button>
+        <p style="font-size:11px;color:var(--text-light);margin-top:10px;line-height:1.7">
+          💡 الصفة الوظيفية تقترح الصلاحية تلقائياً ويمكنك تغييرها. البريد وكلمة المرور اختيارية — بدونها يُسجل الاسم فقط في الدليل.
+        </p>
+      </div>
+
+      <!-- جدول العاملين -->
+      <div class="panel">
+        <h3>👥 دليل العاملين بالمدرسة</h3>
+        <div class="visits-table-wrap">
+          <table class="visits-table">
+            <thead>
+              <tr><th>الاسم</th><th>الصفة الوظيفية</th><th>صلاحية النظام</th><th>حساب الدخول</th><th></th></tr>
+            </thead>
+            <tbody id="staffTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!-- ============ نهاية قسم العاملون ============ -->
+
+  <div class="footer">
+    جميع الملفات محفوظة على Firebase · يتم التحديث تلقائياً · العام الدراسي 1447-1448 هـ · وزارة التعليم
+  </div>
+
+</div>
+
+<!-- ===== شاشة تسجيل الدخول ===== -->
+<div class="login-overlay" id="loginOverlay">
+  <div class="login-card">
+    <div class="login-logos">
+      <img src="logo-ministry.png" alt="وزارة التعليم">
+      <img src="logo-continuous.png" alt="التعليم المستمر بجدة">
+    </div>
+    <h2>تسجيل الدخول</h2>
+    <div class="sub">بوابة العمل الإداري — دخول المخولين فقط</div>
+    <div class="login-error" id="loginError"></div>
+    <div class="form-group">
+      <label>البريد الإلكتروني</label>
+      <input type="email" id="loginEmail" placeholder="example@school.sa" dir="ltr">
+    </div>
+    <div class="form-group">
+      <label>كلمة المرور</label>
+      <input type="password" id="loginPassword" placeholder="••••••••" dir="ltr">
+    </div>
+    <button class="btn btn-primary btn-block" onclick="doLogin()">دخول</button>
+    <div class="login-guest" onclick="closeLogin()">المتابعة كزائر (عرض فقط)</div>
+  </div>
+</div>
+
+<!-- ===== نافذة مجلد (إضافة/تعديل) ===== -->
+<div class="modal-overlay" id="folderModal">
+  <div class="modal">
+    <h3 id="folderModalTitle">إضافة مجلد</h3>
+    <div class="form-group">
+      <label>عنوان المجلد</label>
+      <input type="text" id="folderTitle" placeholder="مثال: خطة زيارات المدير">
+    </div>
+    <div class="form-group">
+      <label>الوصف</label>
+      <textarea id="folderDesc" rows="2" placeholder="وصف مختصر لمحتوى المجلد"></textarea>
+    </div>
+    <div class="form-group">
+      <label>الحالة</label>
+      <select id="folderStatus">
+        <option value="done">مكتمل</option>
+        <option value="progress">قيد التنفيذ</option>
+        <option value="update">قيد التحديث</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>الأيقونة</label>
+      <div class="icon-picker" id="iconPicker"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" onclick="saveFolder()">حفظ</button>
+      <button class="btn btn-outline" onclick="closeModal('folderModal')">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== نافذة ملف (إضافة/تعديل) ===== -->
+<div class="modal-overlay" id="fileModal">
+  <div class="modal">
+    <h3 id="fileModalTitle">إضافة ملف</h3>
+    <div class="form-group">
+      <label>اسم الملف</label>
+      <input type="text" id="fileName" placeholder="مثال: خطة زيارات الفصل الأول.pdf">
+    </div>
+    <div class="form-group">
+      <label>رابط الملف (Google Drive أو Firebase Storage)</label>
+      <input type="url" id="fileLink" placeholder="https://..." dir="ltr">
+    </div>
+    <div class="form-group">
+      <label>الأيقونة</label>
+      <div class="icon-picker" id="fileIconPicker"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" onclick="saveFile()">حفظ</button>
+      <button class="btn btn-outline" onclick="closeModal('fileModal')">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== نافذة إدارة المستخدمين ===== -->
+<div class="modal-overlay" id="usersModal">
+  <div class="modal wide">
+    <h3>👥 إدارة المستخدمين والصلاحيات</h3>
+    <div style="overflow-x:auto">
+      <table class="users-table">
+        <thead>
+          <tr><th>الاسم</th><th>البريد الإلكتروني</th><th>الصلاحية</th><th></th></tr>
+        </thead>
+        <tbody id="usersTableBody"></tbody>
+      </table>
+    </div>
+    <h3 style="margin-top:22px;font-size:14px">إضافة مستخدم جديد</h3>
+    <div class="form-group"><label>الاسم</label><input type="text" id="newUserName" placeholder="اسم المستخدم"></div>
+    <div class="form-group"><label>البريد الإلكتروني</label><input type="email" id="newUserEmail" dir="ltr" placeholder="user@school.sa"></div>
+    <div class="form-group"><label>كلمة المرور</label><input type="text" id="newUserPassword" dir="ltr" placeholder="6 أحرف على الأقل"></div>
+    <div class="form-group">
+      <label>الصلاحية</label>
+      <select id="newUserRole">
+        <option value="teacher">معلم — عرض فقط</option>
+        <option value="guard">حارس — عرض فقط</option>
+        <option value="assistant">مساعد إداري — إضافة وتعديل الملفات</option>
+        <option value="deputy">وكيل — إدارة المجلدات والملفات</option>
+        <option value="admin">مدير — صلاحيات كاملة</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" onclick="addUser()">إضافة المستخدم</button>
+      <button class="btn btn-outline" onclick="closeModal('usersModal')">إغلاق</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== نافذة اسم المدرسة ===== -->
+<div class="modal-overlay" id="schoolModal">
+  <div class="modal">
+    <h3>🏫 اسم المدرسة</h3>
+    <div class="form-group">
+      <label>اسم المدرسة (يظهر في ترويسة البوابة ونماذج الطباعة)</label>
+      <input type="text" id="schoolNameInput" placeholder="مثال: ابتدائية الإمام الشافعي">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" onclick="saveSchoolName()">حفظ</button>
+      <button class="btn btn-outline" onclick="closeModal('schoolModal')">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== نافذة تقرير الزيارة ===== -->
+<div class="modal-overlay" id="reportModal">
+  <div class="modal wide">
+    <h3>📝 تقرير الزيارة الصفية</h3>
+    <div id="reportVisitInfo" style="background:var(--bg);border-radius:8px;padding:10px 14px;font-size:12px;margin-bottom:14px"></div>
+    <div class="form-group">
+      <label>عنوان الدرس</label>
+      <input type="text" id="rLesson" placeholder="عنوان الدرس الذي تمت زيارته">
+    </div>
+    <div class="form-group">
+      <label>عناصر التقييم</label>
+      <div id="evalContainer"></div>
+      <div class="eval-avg" id="evalAvg">متوسط التقييم: —</div>
+    </div>
+    <div class="form-group">
+      <label id="lblPositives">الجوانب الإيجابية</label>
+      <textarea id="rPositives" rows="3" placeholder="نقاط القوة التي لُوحظت أثناء الزيارة..."></textarea>
+    </div>
+    <div class="form-group">
+      <label id="lblImprove">جوانب تحتاج إلى تطوير</label>
+      <textarea id="rImprove" rows="3" placeholder="الجوانب التي تحتاج تحسين..."></textarea>
+    </div>
+    <div class="form-group">
+      <label id="lblRecs">التوصيات</label>
+      <textarea id="rRecs" rows="3" placeholder="التوصيات الموجهة للمعلم..."></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" onclick="saveReport()">💾 حفظ التقرير</button>
+      <button class="btn btn-outline" onclick="printReport()">🖨 طباعة</button>
+      <button class="btn btn-outline" onclick="closeModal('reportModal')">إغلاق</button>
+    </div>
+  </div>
+</div>
+
+<div id="printArea"></div>
+<datalist id="teacherList"></datalist>
+<div class="toast" id="toast"></div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, collection, doc, getDoc, getDocs, setDoc, addDoc,
+           updateDoc, deleteDoc, query, orderBy, serverTimestamp }
+    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged,
+           createUserWithEmailAndPassword }
+    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  /* ==========================================================
+     1) إعدادات Firebase — استبدل القيم ببيانات مشروعك
+     ========================================================== */
+  const firebaseConfig = {
+    apiKey: "AIzaSyDNZKFYqsFOmPv7MOGzB7X3OUxYzUvU3xo",
+    authDomain: "smart-school-portal-fe2e9.firebaseapp.com",
+    projectId: "smart-school-portal-fe2e9",
+    storageBucket: "smart-school-portal-fe2e9.firebasestorage.app",
+    messagingSenderId: "754617825742",
+    appId: "1:754617825742:web:0a41e2b921e5bb9484d39f"
+  };
+
+  /* ==========================================================
+     2) نظام الصلاحيات
+     ========================================================== */
+  const ROLE_LABELS = {
+    admin: "مدير",
+    deputy: "وكيل",
+    assistant: "مساعد إداري",
+    teacher: "معلم",
+    guard: "حارس"
+  };
+
+  const PERMISSIONS = {
+    admin:     { editFolder: true,  deleteFolder: true,  editFile: true,  deleteFile: true,  manageUsers: true  },
+    deputy:    { editFolder: true,  deleteFolder: true,  editFile: true,  deleteFile: true,  manageUsers: false },
+    assistant: { editFolder: false, deleteFolder: false, editFile: true,  deleteFile: false, manageUsers: false },
+    teacher:   { editFolder: false, deleteFolder: false, editFile: false, deleteFile: false, manageUsers: false },
+    guard:     { editFolder: false, deleteFolder: false, editFile: false, deleteFile: false, manageUsers: false },
+    guest:     { editFolder: false, deleteFolder: false, editFile: false, deleteFile: false, manageUsers: false }
+  };
+
+  // الصفة الوظيفية → الصلاحية المقترحة
+  const JOB_DEFAULT_ROLE = {
+    "مدير المدرسة": "admin",
+    "وكيل": "deputy",
+    "مساعد إداري": "assistant",
+    "معلم": "teacher",
+    "حارس": "guard"
+  };
+
+  let currentRole = "guest";
+  let currentUserName = "زائر";
+  const can = (perm) => (PERMISSIONS[currentRole] || PERMISSIONS.guest)[perm];
+
+  /* ==========================================================
+     3) بيانات تجريبية (تعمل قبل ربط Firebase)
+     حسابات الدخول التجريبية:
+       مدير:   admin@school.sa     / 123456
+       وكيل:   deputy@school.sa    / 123456
+       معلم:   teacher@school.sa   / 123456
+       مساعد:  assistant@school.sa / 123456
+       حارس:   guard@school.sa     / 123456
+     ========================================================== */
+  const DEMO_USERS = [
+    { name: "أ. مدير المدرسة",  email: "admin@school.sa",     password: "123456", role: "admin" },
+    { name: "أ. الوكيل",        email: "deputy@school.sa",    password: "123456", role: "deputy" },
+    { name: "أ. المعلم",        email: "teacher@school.sa",   password: "123456", role: "teacher" },
+    { name: "أ. المساعد الإداري", email: "assistant@school.sa", password: "123456", role: "assistant" },
+    { name: "أ. حارس المدرسة",  email: "guard@school.sa",     password: "123456", role: "guard" }
+  ];
+
+  const DEMO_DATA = {
+    s1: {
+      name: "الفصل الدراسي الأول",
+      folders: [
+        { id: "d1", icon: "👁", title: "خطة زيارات المدير", desc: "جدول زيارات المدير للفصول والمعلمين مع التقارير المرفقة", status: "done",
+          files: [
+            { n: "خطة زيارات الفصل الأول.pdf", i: "📄", link: "#" },
+            { n: "تقرير زيارة الأسبوع الأول.pdf", i: "📄", link: "#" },
+            { n: "تقرير زيارة الأسبوع الثاني.pdf", i: "📄", link: "#" },
+            { n: "تقرير زيارة الأسبوع الثالث.pdf", i: "📄", link: "#" },
+            { n: "تقرير زيارة الأسبوع الرابع.pdf", i: "📄", link: "#" },
+            { n: "ملخص الزيارات الشهري.docx", i: "📝", link: "#" },
+            { n: "توصيات الزيارات.xlsx", i: "📊", link: "#" },
+            { n: "صور توثيقية.zip", i: "📦", link: "#" }
+          ]},
+        { id: "d2", icon: "🔄", title: "تبادل الزيارات", desc: "خطة الزيارات المتبادلة بين المعلمين والاستفادة منها", status: "done",
+          files: [
+            { n: "خطة تبادل الزيارات.pdf", i: "📄", link: "#" },
+            { n: "جدول الزيارات المتبادلة.xlsx", i: "📊", link: "#" },
+            { n: "تقرير زيارة معلم 1.pdf", i: "📄", link: "#" },
+            { n: "تقرير زيارة معلم 2.pdf", i: "📄", link: "#" },
+            { n: "استمارة تقييم الزيارة.docx", i: "📝", link: "#" },
+            { n: "صور من الزيارات.zip", i: "📦", link: "#" }
+          ]},
+        { id: "d3", icon: "📖", title: "توزيع المنهج", desc: "الخطة الزمنية لتوزيع المنهج الدراسي على الفصول", status: "done",
+          files: [
+            { n: "توزيع المنهج — الرياضيات.pdf", i: "📄", link: "#" },
+            { n: "توزيع المنهج — اللغة العربية.pdf", i: "📄", link: "#" },
+            { n: "توزيع المنهج — العلوم.pdf", i: "📄", link: "#" },
+            { n: "توزيع المنهج — الدراسات.pdf", i: "📄", link: "#" },
+            { n: "توزيع المنهج — اللغة الإنجليزية.pdf", i: "📄", link: "#" },
+            { n: "الخطة الزمنية الشاملة.xlsx", i: "📊", link: "#" },
+            { n: "خريطة المنهج التفصيلية.pdf", i: "🗺", link: "#" }
+          ]},
+        { id: "d4", icon: "📋", title: "تقارير الزيارات الإشرافية", desc: "تقارير الزيارات الإشرافية مع التوصيات والمتابعة", status: "update",
+          files: [
+            { n: "تقرير الزيارة الإشرافية 1.pdf", i: "📄", link: "#" },
+            { n: "تقرير الزيارة الإشرافية 2.pdf", i: "📄", link: "#" },
+            { n: "تقرير الزيارة الإشرافية 3.pdf", i: "📄", link: "#" },
+            { n: "توصيات الزيارات.docx", i: "📝", link: "#" },
+            { n: "متابعة التوصيات.xlsx", i: "📊", link: "#" }
+          ]},
+        { id: "d5", icon: "🌍", title: "الأيام والمناسبات العالمية", desc: "تقارير فعاليات المناسبات العالمية واليوم الوطني", status: "done",
+          files: [
+            { n: "تقرير اليوم الوطني.pdf", i: "📄", link: "#" },
+            { n: "تقرير اليوم العالمي للمعلم.pdf", i: "📄", link: "#" },
+            { n: "تقرير اليوم العالمي للغة العربية.pdf", i: "📄", link: "#" },
+            { n: "تقرير اليوم العالمي للطفل.pdf", i: "📄", link: "#" },
+            { n: "صور الفعاليات.zip", i: "📦", link: "#" }
+          ]},
+        { id: "d6", icon: "📁", title: "السجلات والأغلفة", desc: "سجلات العمل اليومي والأغلفة التنظيمية للملفات", status: "done",
+          files: [
+            { n: "سجل الزيارات اليومية.pdf", i: "📄", link: "#" },
+            { n: "سجل المتابعات.pdf", i: "📄", link: "#" },
+            { n: "سجل الاجتماعات.docx", i: "📝", link: "#" },
+            { n: "أغلفة الملفات الإدارية.pdf", i: "📄", link: "#" },
+            { n: "أغلفة ملفات المعلمين.pdf", i: "📄", link: "#" }
+          ]},
+        { id: "d7", icon: "📅", title: "الخطة الأسبوعية", desc: "الخطط الأسبوعية للفصول والمواد الدراسية", status: "done",
+          files: [
+            { n: "الخطة الأسبوعية — الأسبوع 1.pdf", i: "📄", link: "#" },
+            { n: "الخطة الأسبوعية — الأسبوع 2.pdf", i: "📄", link: "#" },
+            { n: "الخطة الأسبوعية — الأسبوع 3.pdf", i: "📄", link: "#" },
+            { n: "الخطة الأسبوعية — الأسبوع 4.pdf", i: "📄", link: "#" },
+            { n: "الخطة الأسبوعية — الأسبوع 5.pdf", i: "📄", link: "#" },
+            { n: "الخطة الأسبوعية — الأسبوع 6.pdf", i: "📄", link: "#" },
+            { n: "الخطة الأسبوعية — الأسبوع 7.pdf", i: "📄", link: "#" },
+            { n: "الخطة الأسبوعية — الأسبوع 8.pdf", i: "📄", link: "#" }
+          ]},
+        { id: "d8", icon: "🎯", title: "التعلم النشط", desc: "استراتيجيات التعلم النشط والأنشطة الصفية التفاعلية", status: "done",
+          files: [
+            { n: "استراتيجيات التعلم النشط.pdf", i: "📄", link: "#" },
+            { n: "أنشطة صفية تفاعلية.docx", i: "📝", link: "#" },
+            { n: "نماذج دروس تفاعلية.pdf", i: "📄", link: "#" },
+            { n: "تقرير تنفيذ التعلم النشط.pdf", i: "📄", link: "#" },
+            { n: "صور من الأنشطة.zip", i: "📦", link: "#" }
+          ]},
+        { id: "d9", icon: "🖼", title: "البوستر الأسبوعي", desc: "البوسترات التوعوية والإعلانية الأسبوعية للمدرسة", status: "done",
+          files: [
+            { n: "بوستر الأسبوع 1.jpg", i: "🖼", link: "#" },
+            { n: "بوستر الأسبوع 2.jpg", i: "🖼", link: "#" },
+            { n: "بوستر الأسبوع 3.jpg", i: "🖼", link: "#" },
+            { n: "بوستر الأسبوع 4.jpg", i: "🖼", link: "#" },
+            { n: "بوستر الأسبوع 5.jpg", i: "🖼", link: "#" },
+            { n: "بوستر الأسبوع 6.jpg", i: "🖼", link: "#" },
+            { n: "بوستر الأسبوع 7.jpg", i: "🖼", link: "#" },
+            { n: "بوستر الأسبوع 8.jpg", i: "🖼", link: "#" }
+          ]}
+      ]
+    },
+    s2: {
+      name: "الفصل الدراسي الثاني",
+      folders: [
+        { id: "d10", icon: "👁", title: "خطة زيارات المدير", desc: "زيارات المدير للفصول والمعلمين — الفصل الثاني", status: "progress",
+          files: [
+            { n: "خطة زيارات الفصل الثاني.pdf", i: "📄", link: "#" },
+            { n: "تقرير زيارة الأسبوع الأول.pdf", i: "📄", link: "#" },
+            { n: "تقرير زيارة الأسبوع الثاني.pdf", i: "📄", link: "#" },
+            { n: "ملخص الزيارات الشهري.docx", i: "📝", link: "#" },
+            { n: "توصيات الزيارات.xlsx", i: "📊", link: "#" }
+          ]},
+        { id: "d11", icon: "🌙", title: "خطة إجرائية — رمضان", desc: "الخطة الإجرائية لانضباط العملية التعليمية في رمضان", status: "done",
+          files: [
+            { n: "الخطة الإجرائية لرمضان.pdf", i: "📄", link: "#" },
+            { n: "جدول الحصص في رمضان.xlsx", i: "📊", link: "#" },
+            { n: "خطة الأنشطة الرمضانية.pdf", i: "📄", link: "#" },
+            { n: "تعليمات انضباط رمضان.docx", i: "📝", link: "#" },
+            { n: "برنامج تكريم الطلاب.pdf", i: "📄", link: "#" }
+          ]},
+        { id: "d12", icon: "📝", title: "الاختبارات", desc: "نماذج الاختبارات وجداولها وتحليل النتائج", status: "update",
+          files: [
+            { n: "جدول الاختبارات النهائية.pdf", i: "📄", link: "#" },
+            { n: "نماذج اختبارات — الرياضيات.pdf", i: "📄", link: "#" },
+            { n: "نماذج اختبارات — اللغة العربية.pdf", i: "📄", link: "#" },
+            { n: "نماذج اختبارات — العلوم.pdf", i: "📄", link: "#" },
+            { n: "تحليل نتائج الاختبارات.xlsx", i: "📊", link: "#" },
+            { n: "توزيع درجات المواد.pdf", i: "📄", link: "#" }
+          ]},
+        { id: "d13", icon: "📖", title: "توزيع المنهج", desc: "الخطة الزمنية لتوزيع المنهج — الفصل الثاني", status: "progress",
+          files: [
+            { n: "توزيع المنهج — الرياضيات.pdf", i: "📄", link: "#" },
+            { n: "توزيع المنهج — اللغة العربية.pdf", i: "📄", link: "#" },
+            { n: "توزيع المنهج — العلوم.pdf", i: "📄", link: "#" },
+            { n: "الخطة الزمنية الشاملة.xlsx", i: "📊", link: "#" }
+          ]},
+        { id: "d14", icon: "📋", title: "تقارير الزيارات الإشرافية", desc: "تقارير الزيارات الإشرافية — الفصل الثاني", status: "progress",
+          files: [
+            { n: "تقرير الزيارة الإشرافية 1.pdf", i: "📄", link: "#" },
+            { n: "تقرير الزيارة الإشرافية 2.pdf", i: "📄", link: "#" },
+            { n: "توصيات الزيارات.docx", i: "📝", link: "#" }
+          ]},
+        { id: "d15", icon: "📅", title: "الخطة الأسبوعية", desc: "الخطط الأسبوعية للفصول — الفصل الثاني", status: "progress",
+          files: [
+            { n: "الخطة الأسبوعية — الأسبوع 1.pdf", i: "📄", link: "#" },
+            { n: "الخطة الأسبوعية — الأسبوع 2.pdf", i: "📄", link: "#" },
+            { n: "الخطة الأسبوعية — الأسبوع 3.pdf", i: "📄", link: "#" },
+            { n: "الخطة الأسبوعية — الأسبوع 4.pdf", i: "📄", link: "#" }
+          ]}
+      ]
+    }
+  };
+
+  /* ==========================================================
+     4) الاتصال بـ Firebase وتحميل البيانات
+     ========================================================== */
+  const STATUS_MAP = {
+    done:     { label: "مكتمل",       dot: "dot-green"  },
+    progress: { label: "قيد التنفيذ", dot: "dot-yellow" },
+    update:   { label: "قيد التحديث", dot: "dot-yellow" }
+  };
+
+  const configured = !firebaseConfig.apiKey.startsWith("ضع");
+  let db = null, auth = null, app = null;
+  let DATA = null;
+  let isDemo = !configured;
+
+  if (configured) {
+    app = initializeApp(firebaseConfig);
+    db = getFirestore(app);
+    auth = getAuth(app);
+  }
+
+  async function loadData() {
+    if (isDemo) {
+      document.getElementById("sourceBadge").textContent = "بيانات تجريبية — للمعاينة";
+      return structuredClone(DEMO_DATA);
+    }
+    try {
+      const semsSnap = await getDocs(query(collection(db, "semesters"), orderBy("order")));
+      const result = {};
+      for (const semDoc of semsSnap.docs) {
+        const foldersSnap = await getDocs(
+          query(collection(db, "semesters", semDoc.id, "folders"), orderBy("order"))
+        );
+        result[semDoc.id] = {
+          name: semDoc.data().name,
+          folders: foldersSnap.docs.map(f => ({ id: f.id, ...f.data() }))
+        };
+      }
+      document.getElementById("sourceBadge").textContent = "متصل بـ Firebase";
+      return result;
+    } catch (err) {
+      console.error("خطأ في الاتصال بـ Firebase:", err);
+      document.getElementById("sourceBadge").textContent = "تعذر الاتصال — بيانات تجريبية";
+      isDemo = true;
+      return structuredClone(DEMO_DATA);
+    }
+  }
+
+  /* ==========================================================
+     5) أدوات مساعدة
+     ========================================================== */
+  const esc = (s) => String(s ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;")
+                    .replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+
+  function toast(msg, type = "") {
+    const t = document.getElementById("toast");
+    t.textContent = msg;
+    t.className = "toast show " + type;
+    setTimeout(() => t.className = "toast", 2600);
+  }
+
+  function fmtDate(ts) {
+    if (!ts) return "";
+    const d = ts.toDate ? ts.toDate() : new Date(ts);
+    return d.toLocaleDateString("ar-SA", { year: "numeric", month: "long", day: "numeric" });
+  }
+
+  /* ==========================================================
+     6) العرض
+     ========================================================== */
+  function renderStats() {
+    let folders = 0, files = 0, doneFolders = 0;
+    for (const sem of Object.values(DATA)) {
+      for (const f of sem.folders) {
+        folders++;
+        files += (f.files || []).length;
+        if (f.status === "done") doneFolders++;
+      }
+    }
+    document.getElementById("statFolders").textContent = folders;
+    document.getElementById("statFiles").textContent = files;
+    document.getElementById("statDone").textContent =
+      folders ? Math.round((doneFolders / folders) * 100) + "%" : "0%";
+    document.getElementById("statSems").textContent = Object.keys(DATA).length;
+  }
+
+  function renderTabs() {
+    const bar = document.getElementById("tabsBar");
+    bar.innerHTML = "";
+    Object.entries(DATA).forEach(([semId, sem], idx) => {
+      const btn = document.createElement("button");
+      btn.className = "tab" + (idx === 0 ? " active" : "");
+      btn.textContent = sem.name;
+      btn.onclick = () => switchTab(semId, btn);
+      bar.appendChild(btn);
+    });
+  }
+
+  function renderSemesters() {
+    const container = document.getElementById("semestersContainer");
+    container.innerHTML = "";
+    Object.entries(DATA).forEach(([semId, sem], idx) => {
+      const div = document.createElement("div");
+      div.id = "sem-" + semId;
+      div.className = "content" + (idx === 0 ? " active" : "");
+
+      const sorted = [...sem.folders].sort((a, b) => (a.order ?? 99) - (b.order ?? 99));
+      div.innerHTML = sorted.map((f) => {
+        const st = STATUS_MAP[f.status] || STATUS_MAP.done;
+        const count = (f.files || []).length;
+        const tools = can("editFolder") ? `
+          <div class="folder-tools visible">
+            <button class="tool-btn" title="تعديل" onclick="event.stopPropagation();openFolderModal('${semId}','${f.id}')">✏️</button>
+            ${can("deleteFolder") ? `<button class="tool-btn del" title="حذف" onclick="event.stopPropagation();deleteFolder('${semId}','${f.id}')">🗑</button>` : ""}
+          </div>` : "";
+        return `
+          <div class="folder" onclick="openDetail('${semId}','${f.id}')">
+            ${tools}
+            <div class="folder-icon">${f.icon || "📁"}</div>
+            <div class="folder-title">${esc(f.title)}</div>
+            <div class="folder-desc">${esc(f.desc || "")}</div>
+            <div class="folder-meta">
+              <span>${count} ${count > 10 ? "ملف" : "ملفات"}</span>
+              <span class="status"><span class="dot ${st.dot}"></span>${st.label}</span>
+            </div>
+            ${f.updatedAt ? `<div class="folder-updated">آخر تحديث: ${fmtDate(f.updatedAt)}</div>` : ""}
+          </div>`;
+      }).join("");
+
+      if (can("editFolder")) {
+        div.innerHTML += `
+          <button class="add-folder-card" onclick="openFolderModal('${semId}')">
+            <span class="plus">+</span>
+            إضافة مجلد جديد
+          </button>`;
+      }
+      container.appendChild(div);
+    });
+  }
+
+  function renderAll() {
+    renderStats();
+    renderTabs();
+    renderSemesters();
+    closeDetail();
+  }
+
+  function switchTab(semId, btn) {
+    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll(".content").forEach(c => c.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById("sem-" + semId).classList.add("active");
+    closeDetail();
+  }
+
+  /* ==========================================================
+     7) لوحة تفاصيل المجلد + الملفات
+     ========================================================== */
+  let currentDetail = { semId: null, folderId: null };
+
+  function findFolder(semId, folderId) {
+    return DATA[semId]?.folders.find(f => f.id === folderId);
+  }
+
+  function openDetail(semId, folderId) {
+    const folder = findFolder(semId, folderId);
+    if (!folder) return;
+    currentDetail = { semId, folderId };
+    document.getElementById("detailTitle").textContent =
+      (folder.icon || "") + " " + folder.title + " — " + DATA[semId].name;
+    document.getElementById("addFileBtn").style.display = can("editFile") ? "inline-flex" : "none";
+    renderFiles();
+    document.getElementById("detailPanel").classList.add("active");
+    document.getElementById("detailPanel").scrollIntoView({ behavior: "smooth" });
+  }
+
+  function renderFiles() {
+    const folder = findFolder(currentDetail.semId, currentDetail.folderId);
+    if (!folder) return;
+    document.getElementById("fileList").innerHTML = (folder.files || []).map((f, idx) => `
+      <div class="file-item">
+        <span class="file-icon">${f.i || "📄"}</span>
+        <span class="file-name">${esc(f.n)}</span>
+        ${can("editFile") ? `<button class="tool-btn" title="تعديل" onclick="openFileModal(${idx})">✏️</button>` : ""}
+        ${can("deleteFile") ? `<button class="tool-btn del" title="حذف" onclick="deleteFile(${idx})">🗑</button>` : ""}
+        <a class="file-action ${f.link === "#" ? "disabled" : ""}"
+           href="${esc(f.link)}" target="_blank" rel="noopener">عرض</a>
+      </div>`).join("") ||
+      `<div style="grid-column:1/-1;text-align:center;color:var(--text-light);padding:20px;font-size:13px">لا توجد ملفات بعد</div>`;
+  }
+
+  function closeDetail() {
+    document.getElementById("detailPanel").classList.remove("active");
+    currentDetail = { semId: null, folderId: null };
+  }
+
+  /* ==========================================================
+     8) إدارة المجلدات (إضافة/تعديل/حذف)
+     ========================================================== */
+  const FOLDER_ICONS = ["📁","👁","🔄","📖","📋","🌍","📅","🎯","🖼","🌙","📝","📊","🏫","⭐","📌","🗂"];
+  const FILE_ICONS = ["📄","📝","📊","🖼","📦","🗺","🎬","🔊","📑","🔗"];
+  let editingFolder = { semId: null, folderId: null };
+  let selectedFolderIcon = "📁";
+  let selectedFileIcon = "📄";
+  let editingFileIndex = -1;
+
+  function buildIconPicker(elId, icons, selected, onPick) {
+    const el = document.getElementById(elId);
+    el.innerHTML = "";
+    icons.forEach(ic => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "icon-option" + (ic === selected ? " selected" : "");
+      b.textContent = ic;
+      b.onclick = () => { onPick(ic); buildIconPicker(elId, icons, ic, onPick); };
+      el.appendChild(b);
+    });
+  }
+
+  function openFolderModal(semId, folderId = null) {
+    editingFolder = { semId, folderId };
+    const f = folderId ? findFolder(semId, folderId) : null;
+    document.getElementById("folderModalTitle").textContent = f ? "تعديل المجلد" : "إضافة مجلد جديد";
+    document.getElementById("folderTitle").value = f ? f.title : "";
+    document.getElementById("folderDesc").value = f ? (f.desc || "") : "";
+    document.getElementById("folderStatus").value = f ? f.status : "progress";
+    selectedFolderIcon = f ? (f.icon || "📁") : "📁";
+    buildIconPicker("iconPicker", FOLDER_ICONS, selectedFolderIcon, ic => selectedFolderIcon = ic);
+    document.getElementById("folderModal").classList.add("active");
+  }
+
+  async function saveFolder() {
+    const title = document.getElementById("folderTitle").value.trim();
+    if (!title) { toast("أدخل عنوان المجلد", "error"); return; }
+    const payload = {
+      title,
+      desc: document.getElementById("folderDesc").value.trim(),
+      status: document.getElementById("folderStatus").value,
+      icon: selectedFolderIcon
+    };
+    const { semId, folderId } = editingFolder;
+
+    try {
+      if (isDemo) {
+        if (folderId) {
+          Object.assign(findFolder(semId, folderId), payload);
+        } else {
+          DATA[semId].folders.push({ id: "demo-" + Date.now(), files: [], order: 99, ...payload });
+        }
+      } else {
+        if (folderId) {
+          await updateDoc(doc(db, "semesters", semId, "folders", folderId),
+            { ...payload, updatedAt: serverTimestamp() });
+        } else {
+          const count = DATA[semId].folders.length;
+          await addDoc(collection(db, "semesters", semId, "folders"),
+            { ...payload, files: [], filesCount: 0, order: count + 1, updatedAt: serverTimestamp() });
+        }
+        DATA = await loadData();
+      }
+      closeModal("folderModal");
+      renderAll();
+      toast(folderId ? "تم تعديل المجلد بنجاح" : "تمت إضافة المجلد بنجاح", "success");
+    } catch (e) { console.error(e); toast("تعذر الحفظ — تحقق من الصلاحيات", "error"); }
+  }
+
+  async function deleteFolder(semId, folderId) {
+    const f = findFolder(semId, folderId);
+    if (!confirm(`حذف مجلد «${f.title}» وجميع ملفاته؟`)) return;
+    try {
+      if (isDemo) {
+        DATA[semId].folders = DATA[semId].folders.filter(x => x.id !== folderId);
+      } else {
+        await deleteDoc(doc(db, "semesters", semId, "folders", folderId));
+        DATA = await loadData();
+      }
+      renderAll();
+      toast("تم حذف المجلد", "success");
+    } catch (e) { console.error(e); toast("تعذر الحذف", "error"); }
+  }
+
+  /* ==========================================================
+     9) إدارة الملفات (إضافة/تعديل/حذف)
+     ========================================================== */
+  function openFileModal(fileIndex = -1) {
+    editingFileIndex = fileIndex;
+    const folder = findFolder(currentDetail.semId, currentDetail.folderId);
+    const f = fileIndex >= 0 ? folder.files[fileIndex] : null;
+    document.getElementById("fileModalTitle").textContent = f ? "تعديل الملف" : "إضافة ملف";
+    document.getElementById("fileName").value = f ? f.n : "";
+    document.getElementById("fileLink").value = f && f.link !== "#" ? f.link : "";
+    selectedFileIcon = f ? (f.i || "📄") : "📄";
+    buildIconPicker("fileIconPicker", FILE_ICONS, selectedFileIcon, ic => selectedFileIcon = ic);
+    document.getElementById("fileModal").classList.add("active");
+  }
+
+  async function saveFile() {
+    const name = document.getElementById("fileName").value.trim();
+    if (!name) { toast("أدخل اسم الملف", "error"); return; }
+    const link = document.getElementById("fileLink").value.trim() || "#";
+    const folder = findFolder(currentDetail.semId, currentDetail.folderId);
+    const files = [...(folder.files || [])];
+    const fileObj = { n: name, i: selectedFileIcon, link };
+
+    if (editingFileIndex >= 0) files[editingFileIndex] = fileObj;
+    else files.push(fileObj);
+
+    try {
+      if (isDemo) {
+        folder.files = files;
+      } else {
+        await updateDoc(doc(db, "semesters", currentDetail.semId, "folders", currentDetail.folderId),
+          { files, filesCount: files.length, updatedAt: serverTimestamp() });
+      }
+      closeModal("fileModal");
+      renderFiles();
+      renderAll();
+      openDetail(currentDetail.semId, currentDetail.folderId);
+      toast(editingFileIndex >= 0 ? "تم تعديل الملف" : "تمت إضافة الملف", "success");
+    } catch (e) { console.error(e); toast("تعذر الحفظ", "error"); }
+  }
+
+  async function deleteFile(idx) {
+    const folder = findFolder(currentDetail.semId, currentDetail.folderId);
+    if (!confirm(`حذف ملف «${folder.files[idx].n}»؟`)) return;
+    const files = folder.files.filter((_, i) => i !== idx);
+    try {
+      if (isDemo) {
+        folder.files = files;
+      } else {
+        await updateDoc(doc(db, "semesters", currentDetail.semId, "folders", currentDetail.folderId),
+          { files, filesCount: files.length, updatedAt: serverTimestamp() });
+      }
+      renderFiles();
+      renderAll();
+      openDetail(currentDetail.semId, currentDetail.folderId);
+      toast("تم حذف الملف", "success");
+    } catch (e) { console.error(e); toast("تعذر الحذف", "error"); }
+  }
+
+  /* ==========================================================
+     10) تسجيل الدخول والصلاحيات
+     ========================================================== */
+  let demoUsers = structuredClone(DEMO_USERS); // نسخة قابلة للتعديل في الوضع التجريبي
+
+  function openLogin() {
+    document.getElementById("loginError").classList.remove("active");
+    document.getElementById("loginOverlay").classList.add("active");
+  }
+  function closeLogin() {
+    document.getElementById("loginOverlay").classList.remove("active");
+  }
+
+  function applyRole(role, name) {
+    currentRole = role || "guest";
+    currentUserName = name || "زائر";
+    const isGuest = currentRole === "guest";
+
+    document.getElementById("userName").textContent = currentUserName;
+    document.getElementById("userRoleLabel").textContent =
+      isGuest ? "وضع العرض فقط" : ROLE_LABELS[currentRole];
+    document.querySelector(".avatar").textContent = currentUserName.trim().charAt(0) || "ز";
+
+    document.getElementById("loginBtn").style.display = isGuest ? "inline-flex" : "none";
+    document.getElementById("logoutBtn").style.display = isGuest ? "none" : "inline-flex";
+    document.getElementById("usersBtn").style.display = can("manageUsers") ? "inline-flex" : "none";
+    document.getElementById("schoolBtn").style.display = can("manageUsers") ? "inline-flex" : "none";
+
+    renderAll();
+    // إعادة رسم القسم النشط لتتحدث الأزرار حسب الصلاحية الجديدة
+    const activeNav = document.querySelector(".navcard.active");
+    if (activeNav) showSection(activeNav.id.replace("nav-", ""));
+  }
+
+  let schoolName = "[اسم المدرسة]";
+
+  function renderSchoolName() {
+    document.getElementById("schoolNameText").textContent = schoolName;
+    document.title = "بوابة العمل الإداري — مدرسة " + schoolName;
+  }
+
+  function openSchoolModal() {
+    document.getElementById("schoolNameInput").value = schoolName === "[اسم المدرسة]" ? "" : schoolName;
+    document.getElementById("schoolModal").classList.add("active");
+    document.getElementById("schoolNameInput").focus();
+  }
+
+  async function saveSchoolName() {
+    const v = document.getElementById("schoolNameInput").value.trim();
+    if (!v) { toast("أدخل اسم المدرسة", "error"); return; }
+    schoolName = v;
+    renderSchoolName();
+    closeModal("schoolModal");
+    if (!isDemo && db) {
+      try {
+        await setDoc(doc(db, "settings", "school"), { name: v });
+      } catch (e) {
+        console.error(e);
+        toast("حُفظ مؤقتاً وتعذر الحفظ في السحابة", "error");
+        return;
+      }
+    }
+    toast("تم حفظ اسم المدرسة", "success");
+  }
+
+  async function loadSchoolName() {
+    if (isDemo || !db) { renderSchoolName(); return; }
+    try {
+      const sSnap = await getDoc(doc(db, "settings", "school"));
+      if (sSnap.exists() && sSnap.data().name) schoolName = sSnap.data().name;
+    } catch (e) { console.warn("تعذر تحميل اسم المدرسة", e); }
+    renderSchoolName();
+  }
+
+  async function doLogin() {
+    const email = document.getElementById("loginEmail").value.trim();
+    const pass = document.getElementById("loginPassword").value;
+    const errEl = document.getElementById("loginError");
+
+    if (!email || !pass) {
+      errEl.textContent = "أدخل البريد الإلكتروني وكلمة المرور";
+      errEl.classList.add("active");
+      return;
+    }
+
+    if (isDemo) {
+      const u = demoUsers.find(x => x.email === email && x.password === pass);
+      if (!u) {
+        errEl.textContent = "بيانات الدخول غير صحيحة — جرّب admin@school.sa / 123456";
+        errEl.classList.add("active");
+        return;
+      }
+      closeLogin();
+      applyRole(u.role, u.name);
+      toast("مرحباً " + u.name, "success");
+      return;
+    }
+
+    try {
+      const cred = await signInWithEmailAndPassword(auth, email, pass);
+      const userDoc = await getDoc(doc(db, "users", cred.user.uid));
+      const role = userDoc.exists() ? userDoc.data().role : "teacher";
+      const name = userDoc.exists() ? userDoc.data().name : cred.user.email;
+      closeLogin();
+      applyRole(role, name);
+      toast("مرحباً " + name, "success");
+    } catch (e) {
+      console.error(e);
+      errEl.textContent = "فشل تسجيل الدخول — تحقق من البريد وكلمة المرور";
+      errEl.classList.add("active");
+    }
+  }
+
+  async function logout() {
+    if (!isDemo && auth) await signOut(auth);
+    applyRole("guest", "زائر");
+    toast("تم تسجيل الخروج");
+  }
+
+  /* ==========================================================
+     11) إدارة المستخدمين (للمدير فقط)
+     ========================================================== */
+  async function openUsersModal() {
+    await renderUsersTable();
+    document.getElementById("usersModal").classList.add("active");
+  }
+
+  async function renderUsersTable() {
+    const body = document.getElementById("usersTableBody");
+    let users = [];
+
+    if (isDemo) {
+      users = demoUsers.map(u => ({ id: u.email, name: u.name, email: u.email, role: u.role }));
+    } else {
+      const snap = await getDocs(collection(db, "users"));
+      users = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    }
+
+    body.innerHTML = users.map(u => `
+      <tr>
+        <td>${esc(u.name || "")}</td>
+        <td dir="ltr" style="text-align:right">${esc(u.email || "")}</td>
+        <td>
+          <select onchange="changeRole('${u.id}', this.value)">
+            ${Object.entries(ROLE_LABELS).map(([k, v]) =>
+              `<option value="${k}" ${u.role === k ? "selected" : ""}>${v}</option>`).join("")}
+          </select>
+        </td>
+        <td><button class="tool-btn del" title="إلغاء الصلاحية" onclick="removeUser('${u.id}')">🗑</button></td>
+      </tr>`).join("") ||
+      `<tr><td colspan="4" style="text-align:center;color:var(--text-light)">لا يوجد مستخدمون</td></tr>`;
+  }
+
+  async function addUser() {
+    const name = document.getElementById("newUserName").value.trim();
+    const email = document.getElementById("newUserEmail").value.trim();
+    const password = document.getElementById("newUserPassword").value;
+    const role = document.getElementById("newUserRole").value;
+
+    if (!name || !email || password.length < 6) {
+      toast("أكمل البيانات — كلمة المرور 6 أحرف على الأقل", "error");
+      return;
+    }
+
+    try {
+      if (isDemo) {
+        if (demoUsers.some(u => u.email === email)) { toast("البريد مسجل مسبقاً", "error"); return; }
+        demoUsers.push({ name, email, password, role });
+      } else {
+        // إنشاء الحساب عبر نسخة ثانوية حتى لا يُسجَّل خروج المدير
+        const secondaryApp = initializeApp(firebaseConfig, "secondary-" + Date.now());
+        const secondaryAuth = getAuth(secondaryApp);
+        const cred = await createUserWithEmailAndPassword(secondaryAuth, email, password);
+        await setDoc(doc(db, "users", cred.user.uid), { name, email, role });
+        await signOut(secondaryAuth);
+      }
+      document.getElementById("newUserName").value = "";
+      document.getElementById("newUserEmail").value = "";
+      document.getElementById("newUserPassword").value = "";
+      await renderUsersTable();
+      toast("تمت إضافة المستخدم بنجاح", "success");
+    } catch (e) {
+      console.error(e);
+      toast(e.code === "auth/email-already-in-use" ? "البريد مسجل مسبقاً" : "تعذر إنشاء المستخدم", "error");
+    }
+  }
+
+  async function changeRole(uid, role) {
+    try {
+      if (isDemo) {
+        const u = demoUsers.find(x => x.email === uid);
+        if (u) u.role = role;
+      } else {
+        await updateDoc(doc(db, "users", uid), { role });
+      }
+      toast("تم تحديث الصلاحية", "success");
+    } catch (e) { console.error(e); toast("تعذر التحديث", "error"); }
+  }
+
+  async function removeUser(uid) {
+    if (!confirm("إلغاء صلاحية هذا المستخدم؟ (لن يستطيع التعديل بعدها)")) return;
+    try {
+      if (isDemo) {
+        demoUsers = demoUsers.filter(x => x.email !== uid);
+      } else {
+        await deleteDoc(doc(db, "users", uid));
+      }
+      await renderUsersTable();
+      toast("تم إلغاء الصلاحية", "success");
+    } catch (e) { console.error(e); toast("تعذر الحذف", "error"); }
+  }
+
+  /* ==========================================================
+     11ب) دليل العاملين
+     ========================================================== */
+  const DEMO_STAFF = [
+    { id: "st1", name: "أ. مدير المدرسة",    job: "مدير المدرسة", role: "admin",     email: "admin@school.sa" },
+    { id: "st2", name: "أ. الوكيل",          job: "وكيل",         role: "deputy",    email: "deputy@school.sa" },
+    { id: "st3", name: "أ. محمد العتيبي",    job: "معلم",         role: "teacher",   email: "teacher@school.sa" },
+    { id: "st4", name: "أ. المساعد الإداري", job: "مساعد إداري",  role: "assistant", email: "assistant@school.sa" },
+    { id: "st5", name: "أ. حارس المدرسة",    job: "حارس",         role: "guard",     email: "" }
+  ];
+  let staffList = [];
+  let staffLoaded = false;
+
+  async function ensureStaff() {
+    if (staffLoaded) return;
+    staffLoaded = true;
+    if (isDemo) {
+      staffList = structuredClone(DEMO_STAFF);
+    } else {
+      try {
+        const snap = await getDocs(collection(db, "staff"));
+        staffList = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      } catch (e) { console.error(e); toast("تعذر تحميل قائمة العاملين", "error"); }
+    }
+  }
+
+  function principalName() {
+    const p = staffList.find(s => s.job === "مدير المدرسة");
+    return p ? p.name : "ـــــــــــــــــ";
+  }
+
+  function suggestRole() {
+    const job = document.getElementById("sJob").value;
+    document.getElementById("sRole").value = JOB_DEFAULT_ROLE[job] || "teacher";
+  }
+
+  async function initStaff() {
+    const isAdmin = currentRole === "admin";
+    document.getElementById("staffAddPanel").style.display = isAdmin ? "block" : "none";
+    document.getElementById("staffLayout").style.gridTemplateColumns = isAdmin ? "330px 1fr" : "1fr";
+    if (!staffLoaded) await ensureStaff();
+    renderStaff();
+  }
+
+  function renderStaff() {
+    const isAdmin = currentRole === "admin";
+    const counts = {};
+    staffList.forEach(s => counts[s.job] = (counts[s.job] || 0) + 1);
+    document.getElementById("staffChips").innerHTML = `
+      <span class="chip">👥 إجمالي العاملين: <b>${staffList.length}</b></span>
+      <span class="chip blue">🏫 إدارة: <b>${(counts["مدير المدرسة"] || 0) + (counts["وكيل"] || 0)}</b></span>
+      <span class="chip">👨‍🏫 معلمون: <b>${counts["معلم"] || 0}</b></span>
+      <span class="chip amber">🗂 إداريون: <b>${counts["مساعد إداري"] || 0}</b></span>
+      <span class="chip">🚪 حراسة: <b>${counts["حارس"] || 0}</b></span>
+    `;
+
+    document.getElementById("staffTableBody").innerHTML = staffList.map(s => `
+      <tr>
+        <td style="font-weight:700;white-space:nowrap">${esc(s.name)}</td>
+        <td style="white-space:nowrap">${esc(s.job)}</td>
+        <td>${isAdmin
+          ? `<select onchange="changeStaffRole('${s.id}', this.value)">
+              ${Object.entries(ROLE_LABELS).map(([k, v]) => `<option value="${k}" ${s.role === k ? "selected" : ""}>${v}</option>`).join("")}
+            </select>`
+          : `<span class="v-badge v-done">${ROLE_LABELS[s.role] || esc(s.role)}</span>`}</td>
+        <td style="font-size:12px">${s.email ? `✅ <span dir="ltr">${esc(s.email)}</span>` : "—"}</td>
+        <td style="white-space:nowrap">${isAdmin ? `<button class="tool-btn" title="تعديل" onclick="editStaff('${s.id}')">✏️</button> <button class="tool-btn del" title="حذف" onclick="deleteStaff('${s.id}')">🗑</button>` : ""}</td>
+      </tr>`).join("") ||
+      `<tr><td colspan="5" style="text-align:center;color:var(--text-light);padding:24px">لا يوجد عاملون مسجلون بعد</td></tr>`;
+
+    // اقتراح أسماء المعلمين في نماذج جدولة الزيارات
+    const names = staffList.filter(s => s.job === "معلم").map(s => s.name);
+    document.getElementById("teacherList").innerHTML =
+      names.map(n => `<option value="${esc(n)}">`).join("");
+  }
+
+  let editingStaffId = null;
+
+  function submitStaff() {
+    if (editingStaffId) saveStaffEdit(); else addStaff();
+  }
+
+  function editStaff(id) {
+    const s = staffList.find(x => x.id === id);
+    if (!s) return;
+    editingStaffId = id;
+    document.getElementById("sName").value = s.name;
+    document.getElementById("sJob").value = s.job;
+    document.getElementById("sRole").value = s.role;
+    document.getElementById("sEmail").value = s.email || "";
+    document.getElementById("sEmail").disabled = true;
+    document.getElementById("sPasswordGroup").style.display = "none";
+    document.getElementById("staffPanelTitle").textContent = "✏️ تعديل بيانات الموظف";
+    document.getElementById("staffSubmitBtn").textContent = "حفظ التعديلات";
+    document.getElementById("staffCancelBtn").style.display = "block";
+    document.getElementById("sName").focus();
+    document.getElementById("staffAddPanel").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function cancelEditStaff() {
+    editingStaffId = null;
+    ["sName", "sEmail", "sPassword"].forEach(x => document.getElementById(x).value = "");
+    document.getElementById("sEmail").disabled = false;
+    document.getElementById("sPasswordGroup").style.display = "";
+    document.getElementById("sJob").value = "معلم";
+    document.getElementById("sRole").value = "teacher";
+    document.getElementById("staffPanelTitle").textContent = "➕ إضافة موظف";
+    document.getElementById("staffSubmitBtn").textContent = "إضافة للعاملين";
+    document.getElementById("staffCancelBtn").style.display = "none";
+  }
+
+  async function saveStaffEdit() {
+    const s = staffList.find(x => x.id === editingStaffId);
+    if (!s) { cancelEditStaff(); return; }
+    const name = document.getElementById("sName").value.trim();
+    const job = document.getElementById("sJob").value;
+    const role = document.getElementById("sRole").value;
+    if (!name) { toast("أدخل اسم الموظف", "error"); return; }
+
+    try {
+      Object.assign(s, { name, job, role });
+      if (isDemo) {
+        const u = s.email && demoUsers.find(x => x.email === s.email);
+        if (u) { u.name = name; u.role = role; }
+      } else {
+        await updateDoc(doc(db, "staff", s.id), { name, job, role });
+        // مزامنة حساب الدخول إن وُجد (الاسم والصلاحية)
+        if (s.email) {
+          const snap = await getDocs(collection(db, "users"));
+          const u = snap.docs.find(d => d.data().email === s.email);
+          if (u) await updateDoc(doc(db, "users", u.id), { name, role });
+        }
+      }
+      cancelEditStaff();
+      renderStaff();
+      toast("تم حفظ التعديلات", "success");
+    } catch (e) {
+      console.error(e);
+      toast("تعذر حفظ التعديلات", "error");
+    }
+  }
+
+  async function addStaff() {
+    const name = document.getElementById("sName").value.trim();
+    const job = document.getElementById("sJob").value;
+    const role = document.getElementById("sRole").value;
+    const email = document.getElementById("sEmail").value.trim();
+    const password = document.getElementById("sPassword").value;
+
+    if (!name) { toast("أدخل اسم الموظف", "error"); return; }
+    if (email && password.length < 6) { toast("كلمة المرور 6 أحرف على الأقل", "error"); return; }
+    if (!email && password) { toast("أدخل البريد الإلكتروني مع كلمة المرور", "error"); return; }
+
+    try {
+      const entry = { name, job, role, email: email || "" };
+      if (isDemo) {
+        staffList.push({ id: "demo-" + Date.now(), ...entry });
+        if (email) demoUsers.push({ name, email, password, role });
+      } else {
+        const ref = await addDoc(collection(db, "staff"), { ...entry, createdAt: serverTimestamp() });
+        entry.id = ref.id;
+        staffList.push(entry);
+        if (email) {
+          const secondaryApp = initializeApp(firebaseConfig, "secondary-" + Date.now());
+          const secondaryAuth = getAuth(secondaryApp);
+          const cred = await createUserWithEmailAndPassword(secondaryAuth, email, password);
+          await setDoc(doc(db, "users", cred.user.uid), { name, email, role });
+          await signOut(secondaryAuth);
+        }
+      }
+      ["sName", "sEmail", "sPassword"].forEach(id => document.getElementById(id).value = "");
+      renderStaff();
+      toast(email ? "تمت الإضافة مع إنشاء حساب الدخول" : "تمت الإضافة لدليل العاملين", "success");
+    } catch (e) {
+      console.error(e);
+      toast(e.code === "auth/email-already-in-use" ? "البريد مسجل مسبقاً" : "تعذر الحفظ", "error");
+    }
+  }
+
+  async function changeStaffRole(id, role) {
+    const s = staffList.find(x => x.id === id);
+    if (!s) return;
+    try {
+      s.role = role;
+      if (isDemo) {
+        const u = s.email && demoUsers.find(x => x.email === s.email);
+        if (u) u.role = role;
+      } else {
+        await updateDoc(doc(db, "staff", id), { role });
+        // مزامنة صلاحية حساب الدخول إن وُجد
+        if (s.email) {
+          const snap = await getDocs(collection(db, "users"));
+          const u = snap.docs.find(d => d.data().email === s.email);
+          if (u) await updateDoc(doc(db, "users", u.id), { role });
+        }
+      }
+      renderStaff();
+      toast("تم تحديث الصلاحية", "success");
+    } catch (e) { console.error(e); toast("تعذر التحديث", "error"); }
+  }
+
+  async function deleteStaff(id) {
+    if (!confirm("حذف هذا الموظف من الدليل؟")) return;
+    try {
+      if (!isDemo) await deleteDoc(doc(db, "staff", id));
+      staffList = staffList.filter(x => x.id !== id);
+      renderStaff();
+      toast("تم الحذف", "success");
+    } catch (e) { console.error(e); toast("تعذر الحذف", "error"); }
+  }
+
+  /* ==========================================================
+     12) البحث
+     ========================================================== */
+  function onSearch(q) {
+    const box = document.getElementById("searchResults");
+    q = q.trim();
+    if (q.length < 2) { box.classList.remove("active"); return; }
+
+    const results = [];
+    for (const [semId, sem] of Object.entries(DATA)) {
+      for (const f of sem.folders) {
+        if (f.title.includes(q)) {
+          results.push({ type: "folder", icon: f.icon, name: f.title, path: sem.name, semId, folderId: f.id });
+        }
+        (f.files || []).forEach(file => {
+          if (file.n.includes(q)) {
+            results.push({ type: "file", icon: file.i, name: file.n,
+              path: sem.name + " ← " + f.title, semId, folderId: f.id, link: file.link });
+          }
+        });
+      }
+    }
+
+    box.innerHTML = results.length ? results.slice(0, 15).map(r => `
+      <div class="search-item" onclick="goToResult('${r.semId}','${r.folderId}')">
+        <span>${r.icon || "📄"}</span>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:500">${esc(r.name)}</div>
+          <div class="path">${esc(r.path)} · ${r.type === "folder" ? "مجلد" : "ملف"}</div>
+        </div>
+      </div>`).join("")
+      : `<div class="search-empty">لا توجد نتائج مطابقة</div>`;
+    box.classList.add("active");
+  }
+
+  function goToResult(semId, folderId) {
+    document.getElementById("searchResults").classList.remove("active");
+    document.getElementById("searchInput").value = "";
+    // التبديل لتبويب الفصل ثم فتح المجلد
+    const tabs = document.querySelectorAll(".tab");
+    const idx = Object.keys(DATA).indexOf(semId);
+    if (tabs[idx]) switchTab(semId, tabs[idx]);
+    openDetail(semId, folderId);
+  }
+
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest(".search-wrap"))
+      document.getElementById("searchResults").classList.remove("active");
+  });
+
+  /* ==========================================================
+     12ب) التنقل بين الأقسام
+     ========================================================== */
+  function showSection(name) {
+    document.querySelectorAll(".navcard").forEach(n => n.classList.remove("active"));
+    document.querySelectorAll(".app-section").forEach(s => s.classList.remove("active"));
+    document.getElementById("nav-" + name).classList.add("active");
+    document.getElementById("section-" + name).classList.add("active");
+    if (name === "visits") initVisits("principal");
+    if (name === "exchange") initVisits("exchange");
+    if (name === "staff") initStaff();
+  }
+
+  /* ==========================================================
+     12ج) الزيارات الصفية — زيارات المدير + تبادل الزيارات
+     ========================================================== */
+  const EVAL_ELEMENTS = [
+    "التحضير والإعداد للدرس",
+    "التمهيد وجذب انتباه الطلاب",
+    "تنوع استراتيجيات التدريس",
+    "توظيف استراتيجيات التعلم النشط",
+    "استخدام الوسائل والتقنية",
+    "التقويم والتغذية الراجعة",
+    "إدارة الصف وضبطه",
+    "الواجب المنزلي والإغلاق"
+  ];
+  const EVAL_LEVELS = { 4: "ممتاز", 3: "جيد جداً", 2: "جيد", 1: "يحتاج تطوير" };
+  const OVERALL_COLORS = { "ممتاز": "#1B5E3B", "جيد جداً": "#2B7A9E", "جيد": "#b45309", "يحتاج تطوير": "#dc2626" };
+
+  // حقول نموذج الجدولة لكل نوع
+  const VISIT_FIELDS = {
+    principal: { sem:"vSemester", week:"vWeek", day:"vDay", date:"vDate", subject:"vSubject", cls:"vClass", period:"vPeriod", teacher:"vTeacher" },
+    exchange:  { sem:"xSemester", week:"xWeek", day:"xDay", date:"xDate", subject:"xSubject", cls:"xClass", period:"xPeriod", visitor:"xVisitor", host:"xHost" }
+  };
+
+  const VISIT_CFG = {
+    principal: {
+      coll: "visits",
+      chips: "visitChips", body: "visitsTableBody",
+      schedulePanel: "schedulePanel", layout: "#section-visits .visits-layout",
+      canReport: () => can("editFolder"),   // المدير والوكيل فقط
+      reportTitle: "تقرير زيارة صفية",
+      labels: { pos: "الجوانب الإيجابية", imp: "جوانب تحتاج إلى تطوير", recs: "التوصيات" },
+      info: v => `👤 <b>${esc(v.teacher)}</b> · ${esc(v.subject)} · ${esc(v.className)} · الحصة ${esc(v.period)} · ${esc(v.day)} ${esc(v.date)}`,
+      peopleCells: v => `<td style="font-weight:700;white-space:nowrap">${esc(v.teacher)}</td>`,
+      colspan: 10
+    },
+    exchange: {
+      coll: "exchangeVisits",
+      chips: "exchangeChips", body: "exchangeTableBody",
+      schedulePanel: "exchangeSchedulePanel", layout: "#exchangeLayout",
+      canReport: () => ["admin","deputy","teacher","assistant"].includes(currentRole),   // أي مستخدم مسجل عدا الحارس (المعلم يكتب تقرير زيارته)
+      reportTitle: "تقرير زيارة تبادلية بين المعلمين",
+      labels: { pos: "الجوانب الإيجابية لدى المعلم المستضيف", imp: "ما تمت الاستفادة منه", recs: "التوصيات والمقترحات" },
+      info: v => `🔄 الزائر: <b>${esc(v.visitor)}</b> ← المستضيف: <b>${esc(v.host)}</b> · ${esc(v.subject)} · ${esc(v.className)} · الحصة ${esc(v.period)} · ${esc(v.day)} ${esc(v.date)}`,
+      peopleCells: v => `<td style="font-weight:700;white-space:nowrap">${esc(v.visitor)}</td><td style="font-weight:700;white-space:nowrap">${esc(v.host)}</td>`,
+      colspan: 11
+    }
+  };
+
+  const visitsData = { principal: [], exchange: [] };
+  const visitsLoaded = { principal: false, exchange: false };
+  let currentReport = { type: null, id: null };
+  let currentEval = {};
+
+  const DEMO_VISITS = [
+    { id: "v1", semester: "s1", week: 1, day: "الأحد", date: "2026-03-01", teacher: "أ. محمد العتيبي", subject: "الرياضيات", className: "الصف الرابع «2»", period: "الثانية", status: "done",
+      report: { lesson: "جمع الكسور المتشابهة", eval: {0:4,1:4,2:3,3:4,4:3,5:4,6:4,7:3}, positives: "تحضير متميز للدرس وتوظيف رائع للسبورة التفاعلية، وتفاعل عالٍ من الطلاب.", improve: "تخصيص وقت أطول للتقويم الختامي.", recs: "الاستمرار على هذا المستوى ونقل الخبرة للزملاء في تبادل الزيارات.", overall: "ممتاز" } },
+    { id: "v2", semester: "s1", week: 2, day: "الثلاثاء", date: "2026-03-03", teacher: "أ. خالد القحطاني", subject: "لغتي", className: "الصف الخامس «1»", period: "الأولى", status: "done",
+      report: { lesson: "النص الوصفي", eval: {0:3,1:3,2:2,3:3,4:2,5:3,6:4,7:3}, positives: "إدارة صفية متميزة وضبط هادئ للفصل.", improve: "تنويع الوسائل التعليمية وتوظيف التقنية بشكل أكبر.", recs: "الاطلاع على نماذج التعلم النشط في مكتبة البوابة.", overall: "جيد جداً" } },
+    { id: "v3", semester: "s1", week: 3, day: "الأربعاء", date: "2026-03-11", teacher: "أ. عبدالله الغامدي", subject: "العلوم", className: "الصف السادس «3»", period: "الرابعة", status: "scheduled" },
+    { id: "v4", semester: "s1", week: 4, day: "الاثنين", date: "2026-03-16", teacher: "أ. فيصل الشهري", subject: "الدراسات الاجتماعية", className: "الصف الخامس «2»", period: "الثالثة", status: "scheduled" },
+    { id: "v5", semester: "s1", week: 5, day: "الخميس", date: "2026-03-26", teacher: "أ. سلطان المطيري", subject: "اللغة الإنجليزية", className: "الصف الرابع «1»", period: "الخامسة", status: "scheduled" }
+  ];
+
+  const DEMO_EXCHANGE = [
+    { id: "x1", semester: "s1", week: 2, day: "الاثنين", date: "2026-03-02", visitor: "أ. سلطان المطيري", host: "أ. محمد العتيبي", subject: "الرياضيات", className: "الصف الرابع «2»", period: "الثالثة", status: "done",
+      report: { lesson: "الأنماط العددية", eval: {0:4,1:4,2:4,3:3,4:3,5:4,6:4,7:4}, positives: "تمهيد مشوق وربط الدرس بالحياة اليومية، وتنويع في الأسئلة الصفية.", improve: "استفدت من أسلوب التعلم التعاوني في تقسيم المجموعات وسأطبقه في فصلي.", recs: "تعميم التجربة على معلمي المرحلة.", overall: "ممتاز" } },
+    { id: "x2", semester: "s1", week: 3, day: "الأحد", date: "2026-03-08", visitor: "أ. خالد القحطاني", host: "أ. عبدالله الغامدي", subject: "العلوم", className: "الصف السادس «3»", period: "الثانية", status: "scheduled" },
+    { id: "x3", semester: "s1", week: 4, day: "الأربعاء", date: "2026-03-18", visitor: "أ. فيصل الشهري", host: "أ. خالد القحطاني", subject: "لغتي", className: "الصف الخامس «1»", period: "الخامسة", status: "scheduled" }
+  ];
+
+  function fillWeeks(selId) {
+    const sel = document.getElementById(selId);
+    if (sel.options.length) return;
+    for (let i = 1; i <= 18; i++) {
+      const o = document.createElement("option");
+      o.value = i;
+      o.textContent = "الأسبوع " + i;
+      sel.appendChild(o);
+    }
+  }
+
+  async function initVisits(type) {
+    const cfg = VISIT_CFG[type];
+    const F = VISIT_FIELDS[type];
+    fillWeeks(F.week);
+    const dateEl = document.getElementById(F.date);
+    if (!dateEl.value) dateEl.value = new Date().toISOString().slice(0, 10);
+
+    const canManage = can("editFolder");
+    document.getElementById(cfg.schedulePanel).style.display = canManage ? "block" : "none";
+    document.querySelector(cfg.layout).style.gridTemplateColumns = canManage ? "330px 1fr" : "1fr";
+
+    if (!visitsLoaded[type]) {
+      visitsLoaded[type] = true;
+      if (isDemo) {
+        visitsData[type] = structuredClone(type === "principal" ? DEMO_VISITS : DEMO_EXCHANGE);
+      } else {
+        try {
+          const snap = await getDocs(collection(db, cfg.coll));
+          visitsData[type] = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        } catch (e) { console.error(e); toast("تعذر تحميل خطة الزيارات", "error"); }
+      }
+    }
+    renderVisits(type);
+  }
+
+  function overallFromEval(ev) {
+    const vals = Object.values(ev);
+    if (vals.length < EVAL_ELEMENTS.length) return null;
+    const avg = vals.reduce((a, b) => a + b, 0) / EVAL_ELEMENTS.length;
+    if (avg >= 3.5) return "ممتاز";
+    if (avg >= 2.75) return "جيد جداً";
+    if (avg >= 2) return "جيد";
+    return "يحتاج تطوير";
+  }
+
+  function renderVisits(type) {
+    const cfg = VISIT_CFG[type];
+    const list = visitsData[type];
+    const sorted = [...list].sort((a, b) => a.semester.localeCompare(b.semester) || a.week - b.week);
+    const done = list.filter(v => v.status === "done").length;
+    const scheduled = list.filter(v => v.status === "scheduled").length;
+    const rated = list.filter(v => v.report?.overall);
+
+    document.getElementById(cfg.chips).innerHTML = `
+      <span class="chip">📋 إجمالي الخطة: <b>${list.length}</b></span>
+      <span class="chip">✅ زيارات منفذة: <b>${done}</b></span>
+      <span class="chip blue">🕐 مجدولة: <b>${scheduled}</b></span>
+      <span class="chip amber">📊 تقارير مكتملة: <b>${rated.length}</b></span>
+    `;
+
+    const statusBadge = v => v.status === "done"
+      ? `<span class="v-badge v-done">✅ تمت</span>`
+      : `<span class="v-badge v-scheduled">🕐 مجدولة</span>`;
+
+    document.getElementById(cfg.body).innerHTML = sorted.map(v => {
+      const overall = v.report?.overall;
+      const isAdmin = currentRole === "admin";
+      const actions = `
+        ${v.status === "scheduled" && cfg.canReport() ? `<button class="tool-btn" title="كتابة التقرير" onclick="openReport('${type}','${v.id}')">📝</button>` : ""}
+        ${v.status === "done" ? `<button class="tool-btn" title="عرض التقرير" onclick="openReport('${type}','${v.id}')">👁</button>` : ""}
+        ${isAdmin ? `<button class="tool-btn del" title="حذف" onclick="deleteVisit('${type}','${v.id}')">🗑</button>` : ""}`;
+
+      return `<tr>
+        <td>${v.week}</td>
+        <td>${esc(v.day)}</td>
+        <td>${esc(v.date)}</td>
+        ${cfg.peopleCells(v)}
+        <td>${esc(v.subject)}</td>
+        <td style="white-space:nowrap">${esc(v.className)}</td>
+        <td>${esc(v.period)}</td>
+        <td>${statusBadge(v)}</td>
+        <td>${overall ? `<span class="overall-badge" style="background:${OVERALL_COLORS[overall]}18;color:${OVERALL_COLORS[overall]}">${overall}</span>` : "—"}</td>
+        <td style="white-space:nowrap">${actions}</td>
+      </tr>`;
+    }).join("") || `<tr><td colspan="${cfg.colspan}" style="text-align:center;color:var(--text-light);padding:24px">لا توجد زيارات مجدولة بعد</td></tr>`;
+  }
+
+  async function addVisit(type) {
+    const F = VISIT_FIELDS[type];
+    const v = {
+      semester: document.getElementById(F.sem).value,
+      week: parseInt(document.getElementById(F.week).value),
+      day: document.getElementById(F.day).value,
+      date: document.getElementById(F.date).value,
+      subject: document.getElementById(F.subject).value.trim(),
+      className: document.getElementById(F.cls).value.trim(),
+      period: document.getElementById(F.period).value,
+      status: "scheduled"
+    };
+    if (type === "principal") v.teacher = document.getElementById(F.teacher).value.trim();
+    else {
+      v.visitor = document.getElementById(F.visitor).value.trim();
+      v.host = document.getElementById(F.host).value.trim();
+    }
+
+    const personOk = type === "principal" ? v.teacher : (v.visitor && v.host);
+    if (!personOk || !v.date) {
+      toast(type === "principal" ? "أدخل التاريخ واسم المعلم" : "أدخل التاريخ واسمي الزائر والمستضيف", "error");
+      return;
+    }
+
+    try {
+      if (isDemo) {
+        visitsData[type].push({ id: "demo-" + Date.now(), ...v });
+      } else {
+        const ref = await addDoc(collection(db, VISIT_CFG[type].coll),
+          { ...v, createdBy: currentUserName, createdAt: serverTimestamp() });
+        v.id = ref.id;
+        visitsData[type].push(v);
+      }
+      if (type === "principal") document.getElementById(F.teacher).value = "";
+      else { document.getElementById(F.visitor).value = ""; document.getElementById(F.host).value = ""; }
+      renderVisits(type);
+      toast("أُضيفت الزيارة للخطة", "success");
+    } catch (e) { console.error(e); toast("تعذر الحفظ", "error"); }
+  }
+
+  async function deleteVisit(type, id) {
+    if (!confirm("حذف هذه الزيارة من الخطة؟")) return;
+    try {
+      if (!isDemo) await deleteDoc(doc(db, VISIT_CFG[type].coll, id));
+      visitsData[type] = visitsData[type].filter(v => v.id !== id);
+      renderVisits(type);
+      toast("تم الحذف", "success");
+    } catch (e) { console.error(e); toast("تعذر الحذف", "error"); }
+  }
+
+  /* ----- تقرير الزيارة ----- */
+  function openReport(type, visitId) {
+    const cfg = VISIT_CFG[type];
+    const v = visitsData[type].find(x => x.id === visitId);
+    if (!v) return;
+    currentReport = { type, id: visitId };
+    currentEval = v.report?.eval ? { ...v.report.eval } : {};
+
+    document.getElementById("reportVisitInfo").innerHTML = cfg.info(v);
+    document.getElementById("lblPositives").textContent = cfg.labels.pos;
+    document.getElementById("lblImprove").textContent = cfg.labels.imp;
+    document.getElementById("lblRecs").textContent = cfg.labels.recs;
+    document.getElementById("rLesson").value = v.report?.lesson || "";
+    document.getElementById("rPositives").value = v.report?.positives || "";
+    document.getElementById("rImprove").value = v.report?.improve || "";
+    document.getElementById("rRecs").value = v.report?.recs || "";
+
+    // تعطيل الحقول لغير المخولين (عرض فقط)
+    const ro = !cfg.canReport();
+    ["rLesson","rPositives","rImprove","rRecs"].forEach(id => document.getElementById(id).disabled = ro);
+    document.querySelector("#reportModal .btn-primary").style.display = ro ? "none" : "inline-flex";
+
+    renderEval(ro);
+    document.getElementById("reportModal").classList.add("active");
+  }
+
+  function renderEval(readOnly = false) {
+    const cont = document.getElementById("evalContainer");
+    cont.innerHTML = EVAL_ELEMENTS.map((name, i) => `
+      <div class="eval-row">
+        <span class="eval-name">${i + 1}. ${name}</span>
+        <div class="eval-opts">
+          ${[4,3,2,1].map(l => `
+            <button class="eval-opt ${currentEval[i] === l ? "sel-" + l : ""}"
+              ${readOnly ? "disabled" : ""}
+              onclick="setEval(${i}, ${l})">${EVAL_LEVELS[l]}</button>`).join("")}
+        </div>
+      </div>`).join("");
+
+    const vals = Object.values(currentEval);
+    const overall = overallFromEval(currentEval);
+    document.getElementById("evalAvg").textContent = vals.length
+      ? `التقييم المسجل: ${vals.length}/${EVAL_ELEMENTS.length} عنصر` + (overall ? ` — التقدير العام: ${overall}` : "")
+      : "متوسط التقييم: —";
+  }
+
+  function setEval(i, level) {
+    currentEval[i] = level;
+    renderEval(false);
+  }
+
+  function buildReport() {
+    return {
+      lesson: document.getElementById("rLesson").value.trim(),
+      eval: currentEval,
+      positives: document.getElementById("rPositives").value.trim(),
+      improve: document.getElementById("rImprove").value.trim(),
+      recs: document.getElementById("rRecs").value.trim(),
+      overall: overallFromEval(currentEval) || "جيد"
+    };
+  }
+
+  async function saveReport() {
+    const { type, id } = currentReport;
+    const v = visitsData[type].find(x => x.id === id);
+    if (!v) return;
+    if (Object.keys(currentEval).length < EVAL_ELEMENTS.length) {
+      if (!confirm("لم تُقيَّم جميع العناصر — حفظ التقرير على أي حال؟")) return;
+    }
+    const report = buildReport();
+    try {
+      if (!isDemo) {
+        await updateDoc(doc(db, VISIT_CFG[type].coll, id),
+          { status: "done", report, reportedBy: currentUserName, reportedAt: serverTimestamp() });
+      }
+      v.status = "done";
+      v.report = report;
+      closeModal("reportModal");
+      renderVisits(type);
+      toast("تم حفظ تقرير الزيارة", "success");
+    } catch (e) { console.error(e); toast("تعذر الحفظ", "error"); }
+  }
+
+  /* ----- طباعة التقرير بالهوية البصرية ----- */
+  function identityHeader() {
+    return `
+      <div class="id-top">
+        <img class="id-min" src="logo-ministry.png" alt="وزارة التعليم">
+        <div class="id-lines">
+          المملكة العربية السعودية<br>
+          الإدارة العامة للتعليم بمحافظة جدة<br>
+          قسم التعليم المستمر بجدة
+        </div>
+        <div class="id-cont"><img src="logo-continuous-t.png" alt="التعليم المستمر بجدة"></div>
+      </div>
+      <div class="id-school-row"><span class="id-school">${esc(schoolName)}</span></div>`;
+  }
+
+  function paperShell(title, inner) {
+    return `
+      <div class="paper" style="background:white;position:relative;overflow:hidden">
+        ${identityHeader()}
+        <div class="paper-body">
+          <div class="rp-title"><span>${title}</span></div>
+          ${inner}
+        </div>
+        <div class="id-footer"></div>
+      </div>`;
+  }
+
+  async function printReport() {
+    const { type } = currentReport;
+    const cfg = VISIT_CFG[type];
+    const v = visitsData[type].find(x => x.id === currentReport.id);
+    if (!v) return;
+    const rep = buildReport();
+    await ensureStaff();
+    const pName = principalName();
+
+    const peopleRow = type === "principal"
+      ? `<tr>
+          <td class="rp-label">المعلم</td><td style="font-weight:700">${esc(v.teacher)}</td>
+          <td class="rp-label">المادة</td><td>${esc(v.subject)}</td>
+        </tr>`
+      : `<tr>
+          <td class="rp-label">المعلم الزائر</td><td style="font-weight:700">${esc(v.visitor)}</td>
+          <td class="rp-label">المعلم المستضيف</td><td style="font-weight:700">${esc(v.host)}</td>
+        </tr>
+        <tr>
+          <td class="rp-label">المادة</td><td colspan="3">${esc(v.subject)}</td>
+        </tr>`;
+
+    const signRow = type === "principal"
+      ? `<span>المعلم<br><b>${esc(v.teacher)}</b></span><span>مدير المدرسة<br><b>${esc(pName)}</b></span>`
+      : `<span>المعلم الزائر<br><b>${esc(v.visitor)}</b></span><span>المعلم المستضيف<br><b>${esc(v.host)}</b></span><span>مدير المدرسة<br><b>${esc(pName)}</b></span>`;
+
+    const evalRows = EVAL_ELEMENTS.map((name, i) => `
+      <tr>
+        <td style="text-align:center;width:8%">${i + 1}</td>
+        <td>${name}</td>
+        <td style="text-align:center;font-weight:700;width:18%">${rep.eval[i] ? EVAL_LEVELS[rep.eval[i]] : "—"}</td>
+      </tr>`).join("");
+
+    document.getElementById("printArea").innerHTML = paperShell(cfg.reportTitle, `
+      <table class="rp-table"><tbody>
+        ${peopleRow}
+        <tr>
+          <td class="rp-label">الصف / الفصل</td><td>${esc(v.className)}</td>
+          <td class="rp-label">التاريخ</td><td>${esc(v.day)} — ${esc(v.date)}</td>
+        </tr>
+        <tr>
+          <td class="rp-label">الحصة</td><td>${esc(v.period)}</td>
+          <td class="rp-label">عنوان الدرس</td><td>${esc(rep.lesson)}</td>
+        </tr>
+      </tbody></table>
+
+      <table class="rp-table rp-eval">
+        <thead><tr>
+          <th>م</th><th>عنصر التقييم</th><th>التقدير</th>
+        </tr></thead>
+        <tbody>${evalRows}</tbody>
+      </table>
+
+      <div class="rp-overall">التقدير العام: ${esc(rep.overall)}</div>
+
+      <div class="rp-sec">أولاً: ${cfg.labels.pos}</div>
+      <div class="rp-box">${esc(rep.positives)}</div>
+      <div class="rp-sec">ثانياً: ${cfg.labels.imp}</div>
+      <div class="rp-box">${esc(rep.improve)}</div>
+      <div class="rp-sec">ثالثاً: ${cfg.labels.recs}</div>
+      <div class="rp-box">${esc(rep.recs)}</div>
+
+      <div class="rp-signs">${signRow}</div>`);
+    window.print();
+  }
+
+  /* ==========================================================
+     13) عام
+     ========================================================== */
+  function closeModal(id) { document.getElementById(id).classList.remove("active"); }
+
+  // إتاحة الدوال للأحداث في HTML
+  Object.assign(window, {
+    switchTab, openDetail, closeDetail, openFolderModal, saveFolder, deleteFolder,
+    openFileModal, saveFile, deleteFile, openLogin, closeLogin, doLogin, logout,
+    openUsersModal, addUser, changeRole, removeUser, onSearch, goToResult, closeModal,
+    showSection, addVisit, deleteVisit, openReport, setEval, saveReport, printReport,
+    addStaff, deleteStaff, changeStaffRole, suggestRole, submitStaff, editStaff, cancelEditStaff, saveStaffEdit, openSchoolModal, saveSchoolName
+  });
+
+  // إغلاق النوافذ بالنقر خارجها
+  document.querySelectorAll(".modal-overlay").forEach(m =>
+    m.addEventListener("click", e => { if (e.target === m) m.classList.remove("active"); }));
+
+  /* ==========================================================
+     14) التشغيل
+     ========================================================== */
+  DATA = await loadData();
+  await loadSchoolName();
+  renderAll();
+
+  // استمرارية الجلسة عند الاتصال بـ Firebase
+  if (!isDemo && auth) {
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const userDoc = await getDoc(doc(db, "users", user.uid));
+        applyRole(userDoc.exists() ? userDoc.data().role : "teacher",
+                  userDoc.exists() ? userDoc.data().name : user.email);
+      } else {
+        applyRole("guest", "زائر");
+      }
+    });
+  }
+</script>
+
+</body>
+</html>
